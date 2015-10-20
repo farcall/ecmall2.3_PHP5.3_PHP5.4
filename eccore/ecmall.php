@@ -242,7 +242,7 @@ class Lang
         $old_lang =& $GLOBALS['__ECLANG__'];
         if (is_array($old_lang))
         {
-            $new_lang = array_merge($old_lang, $new_lang);
+            $new_lang = array_merge($old_lang,(array) $new_lang);
         }
 
         $GLOBALS['__ECLANG__'] = $new_lang;
