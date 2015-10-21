@@ -22,7 +22,7 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_money` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='虚拟金币表';");
 //lb_line_order
 $db->query("CREATE TABLE `".DB_PREFIX."lb_line_order` (
-  `order` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单ID主键',
+  `order_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单ID主键',
   `buy_id` int(10) NOT NULL DEFAULT '0' COMMENT '买家ID',
   `buy_name` varchar(60) NOT NULL DEFAULT '' COMMENT '买家名称',
   `buy_tel` varchar(60) NOT NULL DEFAULT '' COMMENT '买家电话',
@@ -36,7 +36,7 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_line_order` (
   `order_time` int(10) NOT NULL DEFAULT '0' COMMENT '消费时间',
   `add_time` varchar(255) NOT NULL DEFAULT '' COMMENT '订单提交时间',
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态:卖家提交1;管理员审核通过2;管理员审核拒绝0',
-  PRIMARY KEY (`order`)
+  PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='线下消费单据';
 ");
 //lb_reward_log

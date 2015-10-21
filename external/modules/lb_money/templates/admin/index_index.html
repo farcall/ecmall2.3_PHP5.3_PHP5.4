@@ -1,0 +1,43 @@
+{include file="header.html"}
+<script language="javascript">
+$(function(){
+    $('#sotime,#endtime').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+<div class="mrightTop">
+<div class="fontl">欢迎使用六百商场财务管理系统定制版《作者QQ:435795》</div>
+</div>
+
+<div id="rightTop">
+    <p>用户资金管理</p>
+    <ul class="subnav">
+		<li><a class="btn3" href="index.php?module=lb_money&act=user_money_list">资金列表</a></li>
+		<li><a class="btn3" href="index.php?module=lb_money&act=user_money_add">增加用户资金</a></li>
+		<li><a class="btn3" href="index.php?module=lb_money&act=user_money_log">资金流水日志</a></li>
+    </ul>
+</div>
+
+<div id="rightTop">
+    <p>提现审核管理</p>
+    <ul class="subnav">
+		<li><a class="btn3" href="index.php?module=my_money&act=tx_wei_shenhe">未审核</a></li>
+        <li><a class="btn3" href="index.php?module=my_money&act=tx_index_shenhe">全部提现申请记录</a></li>
+		<li><a class="btn3" href="index.php?module=my_money&act=tx_yi_shenhe">已审核</a></li>
+    </ul>
+</div>
+
+
+<div id="rightTop">
+    <p>买家自提审核</p>
+    <ul class="subnav">
+		<li><a class="btn3" href="index.php?module=my_money&act=mibao_zhengchang">未审核</a></li>
+        <li><a class="btn3" href="index.php?module=my_money&act=mibao_zhengchang">已审核</a></li>
+    </ul>
+</div>
+<div id="rightTop">
+    <p>系统配置</p>
+    <ul class="subnav">
+        <li><a class="btn3" href="#">系统配置</a></li>
+    </ul>
+</div>
+{include file="footer.html"}

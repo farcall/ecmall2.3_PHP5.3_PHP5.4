@@ -1,22 +1,12 @@
 <?php
 /**
  *  @Created By ECMall PhpCacheServer
- *  @Time:2015-10-20 21:30:06
+ *  @Time:2015-10-21 22:55:06
  */
 
 if(filemtime(__FILE__) + 86400 < time())return false;
 
 return array (
-  28 => 
-  array (
-    'goods_id' => '28',
-    'goods_name' => '欧美精贵密码七分袖名媛洋装款水钻圆领绸缎小外套',
-  ),
-  19 => 
-  array (
-    'goods_id' => '19',
-    'goods_name' => '罗衣OL气质真丝雪纺百褶裙针织背心裙',
-  ),
   20 => 
   array (
     'goods_id' => '20',
@@ -27,35 +17,45 @@ return array (
     'goods_id' => '24',
     'goods_name' => '阿迪达斯花式运动鞋',
   ),
-  12 => 
+  28 => 
   array (
-    'goods_id' => '12',
-    'goods_name' => '09新款飞腾运动鞋',
+    'goods_id' => '28',
+    'goods_name' => '欧美精贵密码七分袖名媛洋装款水钻圆领绸缎小外套',
   ),
-  13 => 
+  19 => 
   array (
-    'goods_id' => '13',
-    'goods_name' => '秀族09新款韩版淑女七分袖针织雪纺连衣裙',
+    'goods_id' => '19',
+    'goods_name' => '罗衣OL气质真丝雪纺百褶裙针织背心裙',
   ),
-  29 => 
+  4 => 
   array (
-    'goods_id' => '29',
-    'goods_name' => '夹克.韩版新款09开衫小外套卫衣短甜美显瘦春装',
+    'goods_id' => '4',
+    'goods_name' => '09新款韩版淑连衣裙',
   ),
-  14 => 
+  5 => 
   array (
-    'goods_id' => '14',
-    'goods_name' => '春款彩色格纹系列牛仔小脚裤',
+    'goods_id' => '5',
+    'goods_name' => '2009耐克新款运动鞋',
   ),
-  15 => 
+  21 => 
   array (
-    'goods_id' => '15',
-    'goods_name' => '耐克混色女式篮球鞋',
+    'goods_id' => '21',
+    'goods_name' => '09春季新款简约大方高雅修身针织连衣裙983配腰带',
   ),
-  16 => 
+  6 => 
   array (
-    'goods_id' => '16',
-    'goods_name' => '横纹方格运动鞋',
+    'goods_id' => '6',
+    'goods_name' => '包邮韩版经典长袖雪纺下摆针织连衣裙',
+  ),
+  22 => 
+  array (
+    'goods_id' => '22',
+    'goods_name' => '新款多用型穿珠运动长裤',
+  ),
+  7 => 
+  array (
+    'goods_id' => '7',
+    'goods_name' => '09春款专柜正品奢华系列9分裤',
   ),
 );
 
