@@ -6,7 +6,7 @@
  * Time: 3:39
  */
 
-class Lb_tixianModelextends  extends BaseModel{
+class Lb_tixianModel  extends BaseModel{
     /* 所映射的数据库表 */
     var $table = 'lb_tixian';
 

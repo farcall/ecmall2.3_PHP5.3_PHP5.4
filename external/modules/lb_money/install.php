@@ -57,6 +57,20 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_rewardrule_config` (
   `reward_time` int(10) NOT NULL DEFAULT '0' COMMENT '每天奖励(返现)时间'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='奖励规则（管理员操作）';
 ");
+//lb_recharge_log
+$db->query("CREATE TABLE `".DB_PREFIX."lb_recharge_log` (
+  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID 主键',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `user_name` varchar(60) NOT NULL DEFAULT '' COMMENT '用户名',
+  `recharge_money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '转账额度',
+  `recharge_method` varchar(100) NOT NULL DEFAULT '' COMMENT '充值方式(支付宝,管理员充值）',
+  `recharge_code` varchar(20) NOT NULL DEFAULT '' COMMENT '充值编码',
+  `recharge_message` varchar(255) NOT NULL DEFAULT '' COMMENT '充值消息',
+  `admin_name` varchar(100) NOT NULL DEFAULT '' COMMENT '充值经手人(管理员)',
+  `add_time` int(11) NOT NULL DEFAULT '0' COMMENT '充值时间',
+  PRIMARY KEY (`log_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='充值记录表';
+");
 //lb_tixian
 $db->query("CREATE TABLE `".DB_PREFIX."lb_tixian` (
   `tixian_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '提现表主键',

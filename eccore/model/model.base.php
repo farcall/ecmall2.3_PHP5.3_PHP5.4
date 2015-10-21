@@ -1,7 +1,6 @@
 <?php
 
-if (!defined('IN_ECM'))
-{
+if (!defined('IN_ECM')) {
     exit('403 Forbidden');
 }
 
@@ -16,6 +15,7 @@ define('DROP_CONDITION_TRUNCATE', 'TRUNCATE');  //清空
 除本基类文件外，所有的模型类的类名的构造规则应该是模型名(首字母大写)+model组成，文件名必须是模型名+.model组成
 如有一个用户模型，模型名为user，则其文件名应为user.model.php，类名为UserModel
 */
+
 class BaseModel extends Object
 {
     var $db = null;
@@ -24,13 +24,13 @@ class BaseModel extends Object
     var $table = '';
 
     /* 主键 */
-    var $prikey= '';
+    var $prikey = '';
 
     /* 别名 */
     var $alias = '';
 
     /* 模型的名称 */
-    var $_name   = '';
+    var $_name = '';
 
     /* 表前缀 */
     var $_prefix = '';
@@ -51,13 +51,16 @@ class BaseModel extends Object
     {
         $this->BaseModel($params, $db);
     }
+
     /**
      *  构造函数
      *
-     *  @author Garbin
-     *  @param  array  $params
-     *  @param  object $db
-     *  @return void
+     * @author Garbin
+     *
+     * @param  array  $params
+     * @param  object $db
+     *
+     * @return void
      */
     function BaseModel($params, $db)
     {
@@ -65,10 +68,8 @@ class BaseModel extends Object
         !$this->alias && $this->alias = $this->table;
         $this->_prefix = DB_PREFIX;
         $this->table = $this->_prefix . $this->table;
-        if (!empty($params))
-        {
-            foreach ($params as $key => $value)
-            {
+        if (!empty($params)) {
+            foreach ($params as $key => $value) {
                 $this->$key = $value;
             }
         }
@@ -77,8 +78,8 @@ class BaseModel extends Object
     /**
      *    获取模型名称
      *
-     *    @author    Garbin
-     *    @return    void
+     * @author    Garbin
+     * @return    void
      */
     function getName()
     {
@@ -88,15 +89,16 @@ class BaseModel extends Object
     /**
      *    获取单一一条记录
      *
-     *    @author    Garbin
-     *    @param     mixed $params
-     *    @return    array
+     * @author    Garbin
+     *
+     * @param     mixed $params
+     *
+     * @return    array
      */
     function get($params)
     {
         $data = $this->find($params);
-        if (!is_array($data))
-        {
+        if (!is_array($data)) {
             return array();
         }
 
@@ -107,6 +109,7 @@ class BaseModel extends Object
      * 根据id取得信息
      *
      * @param mix $id
+     *
      * @return array
      */
     function get_info($id)
@@ -120,9 +123,11 @@ class BaseModel extends Object
     /**
      *  根据一定条件找出相关数据(不连接其它模型，直接通过JOIN语句来查询)
      *
-     *  @author Garbin
-     *  @param  mixed  $params
-     *  @return array
+     * @author Garbin
+     *
+     * @param  mixed $params
+     *
+     * @return array
      */
     function find($params = array())
     {
@@ -138,8 +143,7 @@ class BaseModel extends Object
         $join_result = $this->_joinModel($tables, $join);
 
         /* 原来为($join_result || $index_key)，忘了最初的用意，默认加上主键应该是只为了为获得索引的数组服务的，因此只跟索引键是否是主键有关 */
-        if ($index_key == $this->prikey || (is_array($index_key) && in_array($this->prikey, $index_key)))
-        {
+        if ($index_key == $this->prikey || (is_array($index_key) && in_array($this->prikey, $index_key))) {
             /* 如果索引键里有主键，则默认在要查询字段后加上主键 */
             $fields .= ",{$this->alias}.{$this->prikey}";
         }
@@ -152,8 +156,7 @@ class BaseModel extends Object
 
         /* 分页(LIMIT) */
         $limit && $limit = ' LIMIT ' . $limit;
-        if ($count)
-        {
+        if ($count) {
             $this->_updateLastQueryCount("SELECT COUNT(*) as c FROM {$tables}{$conditions}");
         }
 
@@ -161,42 +164,37 @@ class BaseModel extends Object
         $sql = "SELECT {$fields} FROM {$tables}{$conditions}{$order}{$limit}";
 
         return $index_key ? $this->db->getAllWithIndex($sql, $index_key) :
-                            $this->db->getAll($sql);
+            $this->db->getAll($sql);
     }
 
     /**
      *  关联查找多对多关系的记录
      *
-     *  @author Garbin
-     *  @param  mixed  $params
-     *  @return array
+     * @author Garbin
+     *
+     * @param  mixed $params
+     *
+     * @return array
      */
     function findAll($params = array())
     {
         $params = $this->_initFindParams($params);
         extract($params);
         $pri_data = $this->find($params);                   //先找出通过JOIN获得的数据集
-        if (!empty($include) && !empty($pri_data))
-        {
+        if (!empty($include) && !empty($pri_data)) {
             $ids = array();
-            if ($index_key != $this->prikey)
-            {
-                foreach ($pri_data as $pk => $pd)
-                {
+            if ($index_key != $this->prikey) {
+                foreach ($pri_data as $pk => $pd) {
                     $ids[] = $pd[$this->prikey];
                 }
-            }
-            else
-            {
+            } else {
                 $ids = array_keys($pri_data);
             }
 
-            foreach ($include as $relation_name => $find_param)
-            {
-                if (is_string($find_param))
-                {
+            foreach ($include as $relation_name => $find_param) {
+                if (is_string($find_param)) {
                     $relation_name = $find_param;
-                    $find_param= array();
+                    $find_param = array();
                 }
 
                 /* 依次获取关联数据，并将其放放主数据集中 */
@@ -212,25 +210,25 @@ class BaseModel extends Object
     /**
      *    获取一对多，多对多的关联数据
      *
-     *    @author    Garbin
-     *    @param     string $relation_name       关系名称
-     *    @param     array $ids         主表的主键值列表
-     *    @param     array $find_param  关联的条件
-     *    @return    void
+     * @author    Garbin
+     *
+     * @param     string $relation_name 关系名称
+     * @param     array  $ids 主表的主键值列表
+     * @param     array  $find_param 关联的条件
+     *
+     * @return    void
      */
     function getRelatedData($relation_name, $ids, $find_param = array())
     {
         $relation_info = $this->getRelation($relation_name);
         $model =& m($relation_info['model']);
-        if (empty($ids))
-        {
+        if (empty($ids)) {
             $this->_error('no_ids_to_assoc', $model->getName());
 
             return false;
         }
 
-        if ($relation_info['type'] != HAS_MANY && $relation_info['type'] != HAS_AND_BELONGS_TO_MANY)
-        {
+        if ($relation_info['type'] != HAS_MANY && $relation_info['type'] != HAS_AND_BELONGS_TO_MANY) {
             $this->_error('invalid_assoc_model', $model->getName());
 
             return false;
@@ -238,8 +236,7 @@ class BaseModel extends Object
 
         $alias = $model->alias;
         /* 如果是多对多关系，则连接的表的别名为指定别名或中间表名，否则为模型的别名 */
-        if ($relation_info['type'] == HAS_AND_BELONGS_TO_MANY)
-        {
+        if ($relation_info['type'] == HAS_AND_BELONGS_TO_MANY) {
             $be_related = $model->getRelation($relation_info['reverse']);
             $alias = isset($be_related['alias']) ? $be_related['alias'] : $be_related['middle_table'];
         }
@@ -247,27 +244,26 @@ class BaseModel extends Object
         /* 构造查询条件 */
         $conditions = $alias . '.' . $relation_info['foreign_key'] . ' ' . db_create_in($ids);   //主键值限定
         $conditions .= $relation_info['ext_limit'] ?
-                            ' AND ' . $this->_getExtLimit($relation_info['ext_limit'], $alias)
-                            : '';
+            ' AND ' . $this->_getExtLimit($relation_info['ext_limit'], $alias)
+            : '';
         $conditions .= is_string($find_param['conditions']) ? ' AND ' . $find_param['conditions'] : '';
         $find_param['conditions'] = $conditions;
 
 
         /* 查询字段 */
         $find_param['fields'] = !empty($find_param['fields']) ?
-                                    $find_param['fields'] . ',' . $alias . '.' .$relation_info['foreign_key']
-                                    : '';
-        switch ($relation_info['type'])
-        {
+            $find_param['fields'] . ',' . $alias . '.' . $relation_info['foreign_key']
+            : '';
+        switch ($relation_info['type']) {
             case HAS_MANY:
-            break;
+                break;
             case HAS_AND_BELONGS_TO_MANY:
-                $find_param['join']   = !empty($find_param['join'])   ?
-                                            $find_param['join'] . ',' . $relation_info['reverse']
-                                            : $relation_info['reverse'];
+                $find_param['join'] = !empty($find_param['join']) ?
+                    $find_param['join'] . ',' . $relation_info['reverse']
+                    : $relation_info['reverse'];
                 empty($find_param['order']) && $find_param['order'] = $model->alias . ".{$model->prikey} DESC";
                 $find_param['index_key'] = array($relation_info['foreign_key'], $model->prikey);
-            break;
+                break;
         }
 
         return $model->find($find_param);
@@ -276,20 +272,20 @@ class BaseModel extends Object
     /**
      *  添加一条记录
      *
-     *  @author Garbin
-     *  @param  array $data
-     *  @return mixed
+     * @author Garbin
+     *
+     * @param  array $data
+     *
+     * @return mixed
      */
     function add($data, $compatible = false)
     {
-        if (empty($data) || !$this->dataEnough($data))
-        {
+        if (empty($data) || !$this->dataEnough($data)) {
             return false;
         }
 
         $data = $this->_valid($data);
-        if (!$data)
-        {
+        if (!$data) {
             $this->_error('no_valid_data');
             return false;
         }
@@ -298,17 +294,12 @@ class BaseModel extends Object
 
         $this->db->query("{$mode} INTO {$this->table}{$insert_info['fields']} VALUES{$insert_info['values']}");
         $insert_id = $this->db->insert_id();
-        if ($insert_id)
-        {
-            if ($insert_info['length'] > 1)
-            {
-                for ($i = $insert_id; $i < $insert_id + $insert_info['length']; $i++)
-                {
+        if ($insert_id) {
+            if ($insert_info['length'] > 1) {
+                for ($i = $insert_id; $i < $insert_id + $insert_info['length']; $i++) {
                     $id[] = $i;
                 }
-            }
-            else
-            {
+            } else {
                 /* 添加单条记录 */
                 $id = $insert_id;
             }
@@ -320,11 +311,13 @@ class BaseModel extends Object
     /**
      *  添加多对多关联的中间表关联数据
      *
-     *  @author Garbin
-     *  @param  string  $relation_name
-     *  @param  int     $id
-     *  @param  mixed   $ids
-     *  @return bool
+     * @author Garbin
+     *
+     * @param  string $relation_name
+     * @param  int    $id
+     * @param  mixed  $ids
+     *
+     * @return bool
      */
     function createRelation($relation_name, $id, $ids)
     {
@@ -334,12 +327,14 @@ class BaseModel extends Object
     /**
      *    更新多对多关系中的关系数据
      *
-     *    @author    Garbin
-     *    @param     string $rela
-     *    @param     int    $id
-     *    @param     mixed  $ids
-     *    @param     mixed  $update_values
-     *    @return    bool
+     * @author    Garbin
+     *
+     * @param     string $rela
+     * @param     int    $id
+     * @param     mixed  $ids
+     * @param     mixed  $update_values
+     *
+     * @return    bool
      */
     function updateRelation($relation_name, $id, $ids, $update_values)
     {
@@ -349,11 +344,13 @@ class BaseModel extends Object
     /**
      *    去除多对多的关联链接
      *
-     *    @author    Garbin
-     *    @param     string   $relation_name (欲删除关系名称)
-     *    @param     mixed    $conditions    条件
-     *    @param     array    $ids 关联模型的主键值集合(被拥有者ID列表),可为空
-     *    @return    bool
+     * @author    Garbin
+     *
+     * @param     string $relation_name (欲删除关系名称)
+     * @param     mixed  $conditions 条件
+     * @param     array  $ids 关联模型的主键值集合(被拥有者ID列表),可为空
+     *
+     * @return    bool
      */
     function unlinkRelation($relation_name, $conditions, $ids = null)
     {
@@ -363,21 +360,21 @@ class BaseModel extends Object
     /**
      *    对多对多关联表操作
      *
-     *    @author    Garbin
-     *    @param
-     *    @return    void
+     * @author    Garbin
+     *
+     * @param
+     *
+     * @return    void
      */
     function _relationLink($action, $relation_name, $id, $ids, $update_values = array())
     {
-        if ((empty($ids) && $action == 'create') || !$id || !$relation_name)
-        {
+        if ((empty($ids) && $action == 'create') || !$id || !$relation_name) {
             $this->_error('relation_link_param_error');
 
             return false;
         }
         $relation_info = $this->getRelation($relation_name);
-        if ($relation_info['type'] !== HAS_AND_BELONGS_TO_MANY)
-        {
+        if ($relation_info['type'] !== HAS_AND_BELONGS_TO_MANY) {
             /* 若不是多对多的关系，则不支持创建关系链接 */
             $this->_error('relation_link_not_support_type');
 
@@ -387,52 +384,44 @@ class BaseModel extends Object
         /* 被关联模型的反向关联信息 */
         $model =& m($relation_info['model']);
         $be_related = $model->getRelation($relation_info['reverse']);
-        if ($be_related['type'] !== HAS_AND_BELONGS_TO_MANY)
-        {
+        if ($be_related['type'] !== HAS_AND_BELONGS_TO_MANY) {
             $this->_error('be_related_link_not_support_type');
 
             return false;
         }
 
         /* 开始对链接进行操作 */
-        switch ($action)
-        {
+        switch ($action) {
             /* 创建链接 */
             case 'create':
                 $data = array();
 
                 /* 形成一个统一的array(1, 2, 3)类的数组 */
-                if (is_numeric($ids))
-                {
+                if (is_numeric($ids)) {
                     $ids = array($ids);
-                }
-                elseif (is_string($ids))
-                {
+                } elseif (is_string($ids)) {
                     $ids = explode(',', $ids);
                     array_unique($ids);
                 }
                 $ext_limit_data = is_array($relation_info['ext_limit']) ? $relation_info['ext_limit'] : array();
                 /* 对数组进行分情况处理，如果是array(1, 2, 3)类的，则认为只指定了被关联表的主键值 */
-                foreach ($ids as $key => $value)
-                {
+                foreach ($ids as $key => $value) {
                     $related_data = array();
 
                     /* 本表在关联表中的外键值 */
-                    $related_data[$relation_info['foreign_key']]  = $id;
+                    $related_data[$relation_info['foreign_key']] = $id;
 
                     /* 指定了除了主键值外的其它值 */
-                    if (is_array($value))
-                    {
+                    if (is_array($value)) {
                         /* 外表在关联表中的外键值 */
-                        $related_data[$be_related['foreign_key']]     = intval($key);
+                        $related_data[$be_related['foreign_key']] = intval($key);
 
                         /* 将索引数据与扩展数据合并 */
                         $related_data = array_merge($related_data, $value);
-                    }
-                    else //仅指定了被关联表的主键值
+                    } else //仅指定了被关联表的主键值
                     {
                         /* 外表在关联表中的外键值 */
-                        $related_data[$be_related['foreign_key']]     = intval($value);
+                        $related_data[$be_related['foreign_key']] = intval($value);
                     }
 
                     /* 逐项添加 */
@@ -442,50 +431,40 @@ class BaseModel extends Object
 
                 /* 创建链接 */
                 return $this->db->query("REPLACE INTO {$this->_prefix}{$relation_info['middle_table']}{$insert_info['fields']} VALUES{$insert_info['values']}");
-            break;
+                break;
             case 'update':
-                if (empty($update_values))
-                {
+                if (empty($update_values)) {
                     return false;
                 }
-                if (is_string($update_values))
-                {
+                if (is_string($update_values)) {
                     $update_fields = $update_values;
-                }
-                elseif (is_array($update_values))
-                {
+                } elseif (is_array($update_values)) {
                     $update_fields = array();
-                    foreach ($update_values as $_field => $_value)
-                    {
+                    foreach ($update_values as $_field => $_value) {
                         $update_fields[] = "{$_field}='{$_value}'";
                     }
                     $update_fields = implode(',', $update_fields);
-                }
-                else
-                {
+                } else {
                     return false;
                 }
 
                 return $this->db->query("UPDATE {$this->_prefix}{$relation_info['middle_table']} SET {$update_fields} WHERE {$relation_info['foreign_key']} = {$id} AND {$be_related['foreign_key']} " . db_create_in($ids));
-            break;
+                break;
 
             /* 删除链接 */
             case 'drop':
                 /* 是数字，则认为，删除所有与$id有关联的关系*/
-                if (is_numeric($id))
-                {
+                if (is_numeric($id)) {
                     /* 本表主键是一个值，则可以指定被关联模型的主键值 */
                     $where = "{$relation_info['foreign_key']}=" . $id;
 
                     /* 指定了被关联模型的主键值，则将该限定条件加上 */
                     $where .= !empty($ids) ? " AND {$be_related['foreign_key']} " . db_create_in($ids) : '';
-                }
-                elseif (is_array($id))  //是一个数组，则认为删除所有与$id列表中的主键有关系的关系
+                } elseif (is_array($id))  //是一个数组，则认为删除所有与$id列表中的主键有关系的关系
                 {
                     /* 如果本表的主键是一个数组，则表示要删除所有外键为指定集合的关联，在这种情况下，无法指定被关联模型的主键值 */
                     $where = "{$relation_info['foreign_key']} " . db_create_in($id);
-                }
-                elseif (is_string($id)) //是一个字符串，则认为是自定义的条件来限制操作
+                } elseif (is_string($id)) //是一个字符串，则认为是自定义的条件来限制操作
                 {
                     $where = $id;
                 }
@@ -493,7 +472,7 @@ class BaseModel extends Object
                 $where .= is_array($relation_info['ext_limit']) ? ' AND ' . $this->_getExtLimit($relation_info['ext_limit']) : '';
 
                 return $this->db->query("DELETE FROM {$this->_prefix}{$relation_info['middle_table']} WHERE {$where}");
-            break;
+                break;
         }
 
         return true;
@@ -502,24 +481,24 @@ class BaseModel extends Object
     /**
      *  简化更新操作
      *
-     *  @author Garbin
-     *  @param  array   $edit_data
-     *  @param  mixed   $conditions
-     *  @return bool
+     * @author Garbin
+     *
+     * @param  array $edit_data
+     * @param  mixed $conditions
+     *
+     * @return bool
      */
     function edit($conditions, $edit_data)
     {
-        if (empty($edit_data))
-        {
+        if (empty($edit_data)) {
             return false;
         }
         $edit_data = $this->_valid($edit_data);
-        if (!$edit_data)
-        {
+        if (!$edit_data) {
             return false;
         }
         $edit_fields = $this->_getSetFields($edit_data);
-        $conditions  = $this->_getConditions($conditions, false);
+        $conditions = $this->_getConditions($conditions, false);
         $this->db->query("UPDATE {$this->table} SET {$edit_fields}{$conditions}");
 
         return $this->db->affected_rows();
@@ -529,22 +508,20 @@ class BaseModel extends Object
     /**
      *  简化删除记录操作
      *
-     *  @author Garbin
-     *  @param  mixed $ids
-     *  @return int
+     * @author Garbin
+     *
+     * @param  mixed $ids
+     *
+     * @return int
      */
     function drop($conditions, $fields = '')
     {
-        if (empty($conditions))
-        {
+        if (empty($conditions)) {
             return;
         }
-        if ($conditions === DROP_CONDITION_TRUNCATE)
-        {
+        if ($conditions === DROP_CONDITION_TRUNCATE) {
             $conditions = '';
-        }
-        else
-        {
+        } else {
             $conditions = $this->_getConditions($conditions, false);
         }
 
@@ -555,15 +532,13 @@ class BaseModel extends Object
         $this->_saveDroppedData("SELECT {$this->prikey}{$fields} FROM {$this->table}{$conditions}");
 
         $droped_data = $this->getDroppedData();
-        if (empty($droped_data))
-        {
+        if (empty($droped_data)) {
             return 0;
         }
 
         $this->db->query("DELETE FROM {$this->table}{$conditions}");
         $affectedRows = $this->db->affected_rows();
-        if ($affectedRows > 0)
-        {
+        if ($affectedRows > 0) {
             /* 删除依赖数据 */
             $this->dropDependentData(array_keys($droped_data));
         }
@@ -574,52 +549,42 @@ class BaseModel extends Object
     /**
      *  删除依赖数据
      *
-     *  @author Garbin
-     *  @param  mixed $keys     本表的主键值集合
-     *  @return bool
+     * @author Garbin
+     *
+     * @param  mixed $keys 本表的主键值集合
+     *
+     * @return bool
      */
     function dropDependentData($keys)
     {
-        if (empty($keys))
-        {
+        if (empty($keys)) {
             $this->_error('keys_is_empty');
 
             return false;
         }
-        if (is_numeric($keys))
-        {
+        if (is_numeric($keys)) {
             $keys = array($keys);
-        }
-        elseif (is_string($keys))
-        {
+        } elseif (is_string($keys)) {
             $keys = explode(',', $keys);
         }
 
         /* 获取所有关系 */
         $relation = $this->getRelation();
-        if (empty($relation))
-        {
+        if (empty($relation)) {
             return true;
         }
 
         /* 依次将关系中的依赖数据删除 */
-        foreach ($relation as $relation_name => $relation_info)
-        {
+        foreach ($relation as $relation_name => $relation_info) {
             /* 如果是多对多关系，则只解除关联表中的数据 */
-            if ($relation_info['type'] === HAS_AND_BELONGS_TO_MANY)
-            {
+            if ($relation_info['type'] === HAS_AND_BELONGS_TO_MANY) {
                 $this->unlinkRelation($relation_name, $keys);
-            }
-            elseif ($relation_info['dependent'] && $relation_info['type'] !== BELONGS_TO)
-            {
+            } elseif ($relation_info['dependent'] && $relation_info['type'] !== BELONGS_TO) {
                 /* 如果是指定了dependent依赖性，则调用drop删除之 */
-                if ($relation_info['model'] != $this->_name)
-                {
+                if ($relation_info['model'] != $this->_name) {
                     /* 若关联的模型不是本身，则直接使用m取得模型对象 */
                     $model =& m($relation_info['model']);
-                }
-                else
-                {
+                } else {
                     /* 否则要创建一个新的模型对象以避免操作时互相影响 */
                     $model =& m($relation_info['model'], array(), true);
                 }
@@ -631,12 +596,10 @@ class BaseModel extends Object
                 $limit_keys = $keys;
 
                 /*当关联类型是一对一拥有的关系且设定了参考键时，说明外表的外键值不是本表的主键值，而是参考键的值，因此限定键是参考键，要找出参考键的值的集合*/
-                if ($relation_info['type'] == HAS_ONE && isset($relation_info['refer_key']))
-                {
+                if ($relation_info['type'] == HAS_ONE && isset($relation_info['refer_key'])) {
                     /* 找出参考键值的集合,本表的参考键值集合 */
                     $limit_keys = $this->db->getCol("SELECT DISTINCT {$relation_info['refer_key']} FROM {$this->table} WHERE {$this->prikey} " . db_create_in($keys));
-                    if ($limit_keys === false)
-                    {
+                    if ($limit_keys === false) {
                         continue;
                     }
                 }
@@ -653,26 +616,25 @@ class BaseModel extends Object
     /**
      *  获取扩展限制
      *
-     *  @author Garbin
-     *  @param  array $ext_limit
-     *  @param  string $alias
-     *  @return string
+     * @author Garbin
+     *
+     * @param  array  $ext_limit
+     * @param  string $alias
+     *
+     * @return string
      */
     function _getExtLimit($ext_limit, $alias = null)
     {
-        if (!$ext_limit)
-        {
+        if (!$ext_limit) {
             return;
         }
         $str = '';
         $pre = '';
-        if ($alias)
-        {
+        if ($alias) {
             $pre = "{$alias}.";
         }
-        foreach ($ext_limit as $_k => $_v)
-        {
-            $str .=  $str == '' ? " {$pre}{$_k} = '{$_v}'" : " AND {$pre}{$_k} = '{$_v}'";
+        foreach ($ext_limit as $_k => $_v) {
+            $str .= $str == '' ? " {$pre}{$_k} = '{$_v}'" : " AND {$pre}{$_k} = '{$_v}'";
         }
 
         return $str;
@@ -681,8 +643,8 @@ class BaseModel extends Object
     /**
      *  获取时时保存的已删除记录
      *
-     *  @author Garbin
-     *  @return array
+     * @author Garbin
+     * @return array
      */
     function getDroppedData()
     {
@@ -692,8 +654,8 @@ class BaseModel extends Object
     /**
      *  获取统计数
      *
-     *  @author Garbin
-     *  @return int
+     * @author Garbin
+     * @return int
      */
     function getCount()
     {
@@ -703,9 +665,11 @@ class BaseModel extends Object
     /**
      *  临时保存已删除的记录数据
      *
-     *  @author Garbin
-     *  @param  string $sql
-     *  @return void
+     * @author Garbin
+     *
+     * @param  string $sql
+     *
+     * @return void
      */
     function _saveDroppedData($sql)
     {
@@ -715,9 +679,11 @@ class BaseModel extends Object
     /**
      *  更新查询统计数
      *
-     *  @author Garbin
-     *  @param  string $sql
-     *  @return void
+     * @author Garbin
+     *
+     * @param  string $sql
+     *
+     * @return void
      */
     function _updateLastQueryCount($sql)
     {
@@ -727,55 +693,43 @@ class BaseModel extends Object
     /**
      *  获取条件句段
      *
-     *  @author Garbin
-     *  @param  mixed   $conditions
-     *  @return string
+     * @author Garbin
+     *
+     * @param  mixed $conditions
+     *
+     * @return string
      */
     function _getConditions($conditions, $if_add_alias = false)
     {
         $alias = '';
-        if ($if_add_alias)
-        {
+        if ($if_add_alias) {
             $alias = $this->alias . '.';
         }
-        if (is_numeric($conditions))
-        {
+        if (is_numeric($conditions)) {
             /* 如果是一个数字或数字字符串，则认为其是主键值 */
             return " WHERE {$alias}{$this->prikey} = {$conditions}";
-        }
-        elseif (is_string($conditions))
-        {
+        } elseif (is_string($conditions)) {
             /* 如果是字符串，则认为其是SQL自定义条件 */
-            if (substr($conditions, 0, 6) == 'index:')
-            {
-                $value  =   substr($conditions, 6);
+            if (substr($conditions, 0, 6) == 'index:') {
+                $value = substr($conditions, 6);
                 return $value ? " WHERE {$alias}{$this->prikey}='{$value}'" : '';
-            }
-            else
-            {
+            } else {
                 return $conditions ? ' WHERE ' . $conditions : '';
             }
-        }
-        elseif (is_array($conditions))
-        {
+        } elseif (is_array($conditions)) {
             /* 如果是数组，则认为其是一个主键集合 */
-            if (empty($conditions))
-            {
+            if (empty($conditions)) {
                 return '';
             }
-            foreach ($conditions as $_k => $_v)
-            {
-                if (!$_v)
-                {
+            foreach ($conditions as $_k => $_v) {
+                if (!$_v) {
                     unset($conditions[$_k]);
                 }
             }
             $conditions = array_unique($conditions);
 
-            return ' WHERE ' . $alias .$this->prikey . ' ' . db_create_in($conditions);
-        }
-        elseif (is_null($conditions))
-        {
+            return ' WHERE ' . $alias . $this->prikey . ' ' . db_create_in($conditions);
+        } elseif (is_null($conditions)) {
             return '';
         }
     }
@@ -783,19 +737,19 @@ class BaseModel extends Object
     /**
      *  获取设置字段
      *
-     *  @author Garbin
-     *  @param  array $data
-     *  @return string
+     * @author Garbin
+     *
+     * @param  array $data
+     *
+     * @return string
      */
     function _getSetFields($data)
     {
-        if (!is_array($data))
-        {
+        if (!is_array($data)) {
             return $data;
         }
         $fields = array();
-        foreach ($data as $_k => $_v)
-        {
+        foreach ($data as $_k => $_v) {
             !is_array($_v) && $fields[] = "{$_k}='{$_v}'";
         }
 
@@ -805,15 +759,16 @@ class BaseModel extends Object
     /**
      *    获取查询时的字段列表
      *
-     *    @author    Garbin
-     *    @param     string $src_fields_list
-     *    @return    string
+     * @author    Garbin
+     *
+     * @param     string $src_fields_list
+     *
+     * @return    string
      */
     function getRealFields($src_fields_list)
     {
         $fields = $src_fields_list;
-        if (!$src_fields_list)
-        {
+        if (!$src_fields_list) {
             $fields = '';
         }
         $fields = preg_replace('/([a-zA-Z0-9_]+)\.([a-zA-Z0-9_*]+)/e', "\$this->_getFieldTable('\\1') . '.\\2'", $fields);
@@ -824,21 +779,19 @@ class BaseModel extends Object
     /**
      *    解析字段所属
      *
-     *    @author    Garbin
-     *    @param     string $owner
-     *    @return    string
+     * @author    Garbin
+     *
+     * @param     string $owner
+     *
+     * @return    string
      */
     function _getFieldTable($owner)
     {
-        if ($owner == 'this')
-        {
+        if ($owner == 'this') {
             return $this->alias;
-        }
-        else
-        {
+        } else {
             $m =& m($owner);
-            if ($m === false)
-            {
+            if ($m === false) {
                 /* 若没有对象，则原样返回 */
 
                 return $owner;
@@ -851,9 +804,11 @@ class BaseModel extends Object
     /**
      *  获取插入的数据SQL
      *
-     *  @author Garbin
-     *  @param  array $data
-     *  @return string
+     * @author Garbin
+     *
+     * @param  array $data
+     *
+     * @return string
      */
     function _getInsertInfo($data)
     {
@@ -861,24 +816,18 @@ class BaseModel extends Object
         $fields = array();
         $values = array();
         $length = 1;
-        if (key($data) === 0 && is_array($data[0]))
-        {
+        if (key($data) === 0 && is_array($data[0])) {
             $length = count($data);
-            foreach ($data as $_k => $_v)
-            {
-                foreach ($_v as $_f => $_fv)
-                {
+            foreach ($data as $_k => $_v) {
+                foreach ($_v as $_f => $_fv) {
                     $is_array = is_array($_fv);
                     ($_k == 0 && !$is_array) && $fields[] = $_f;
                     !$is_array && $values[$_k][] = "'{$_fv}'";
                 }
                 $values[$_k] = '(' . implode(',', $values[$_k]) . ')';
             }
-        }
-        else
-        {
-            foreach ($data as $_k => $_v)
-            {
+        } else {
+            foreach ($data as $_k => $_v) {
                 $is_array = is_array($_v);
                 !$is_array && $fields[] = $_k;
                 !$is_array && $values[] = "'{$_v}'";
@@ -894,53 +843,46 @@ class BaseModel extends Object
     /**
      *  验证数据合法性，当只验证vrule中指定的字段，并且只当$data中设置了其值时才验证
      *
-     *  @author Garbin
-     *  @param  array $data
-     *  @return mixed
+     * @author Garbin
+     *
+     * @param  array $data
+     *
+     * @return mixed
      */
     function _valid($data)
     {
-        if (empty($this->_autov) || empty($data) || !is_array($data))
-        {
+        if (empty($this->_autov) || empty($data) || !is_array($data)) {
             return $data;
         }
         $max = $filter = $reg = $default = $valid = '';
         reset($data);
         $is_multi = (key($data) === 0 && is_array($data[0]));
-        if (!$is_multi)
-        {
+        if (!$is_multi) {
             $data = array($data);
         }
-        foreach ($this->_autov as $_k => $_v)
-        {
-            if (is_array($_v))
-            {
+        foreach ($this->_autov as $_k => $_v) {
+            if (is_array($_v)) {
                 $required = (isset($_v['required']) && $_v['required']) ? true : false;
-                $type  = isset($this->_autov[$_k]['type']) ? $this->_autov[$_k]['type'] : 'string';
-                $min  = isset($this->_autov[$_k]['min']) ? $this->_autov[$_k]['min'] : 0;
-                $max  = isset($this->_autov[$_k]['max']) ? $this->_autov[$_k]['max'] : 0;
+                $type = isset($this->_autov[$_k]['type']) ? $this->_autov[$_k]['type'] : 'string';
+                $min = isset($this->_autov[$_k]['min']) ? $this->_autov[$_k]['min'] : 0;
+                $max = isset($this->_autov[$_k]['max']) ? $this->_autov[$_k]['max'] : 0;
                 $filter = isset($this->_autov[$_k]['filter']) ? $this->_autov[$_k]['filter'] : '';
-                $valid= isset($this->_autov[$_k]['valid']) ? $this->_autov[$_k]['valid'] : '';
-                $reg  = isset($this->_autov[$_k]['reg']) ? $this->_autov[$_k]['reg'] : '';
+                $valid = isset($this->_autov[$_k]['valid']) ? $this->_autov[$_k]['valid'] : '';
+                $reg = isset($this->_autov[$_k]['reg']) ? $this->_autov[$_k]['reg'] : '';
                 $default = isset($this->_autov[$_k]['default']) ? $this->_autov[$_k]['default'] : '';
-            }
-            else
-            {
+            } else {
                 preg_match_all('/([a-z]+)(\((\d+),(\d+)\))?/', $_v, $result);
                 $type = $result[1];
-                $min  = $result[3];
-                $max  = $result[4];
+                $min = $result[3];
+                $max = $result[4];
             }
-            foreach ($data as $_sk => $_sd)
-            {
+            foreach ($data as $_sk => $_sd) {
                 $has_set = isset($data[$_sk][$_k]);
-                if (!$has_set)
-                {
+                if (!$has_set) {
                     continue;
                 }
 
-                if ($required && $data[$_sk][$_k] == '')
-                {
+                if ($required && $data[$_sk][$_k] == '') {
                     $this->_error("required_field", $_k);
 
                     return false;
@@ -951,45 +893,36 @@ class BaseModel extends Object
                 $value = $data[$_sk][$_k];
 
                 /* 默认值 */
-                if (!$value && $default)
-                {
+                if (!$value && $default) {
                     $data[$_sk][$_k] = function_exists($default) ? $default() : $default;
                     continue;
                 }
 
                 /* 若还是空值，则没必要往下验证长度，正则，自定义和过滤，因为其已经是一个空值了 */
-                if (!$value)
-                {
+                if (!$value) {
                     continue;
                 }
 
                 /* 大小|长度限制 */
-                if ($type == 'string')
-                {
+                if ($type == 'string') {
                     $strlen = strlen($value);
-                    if ($min != 0 && $strlen < $min)
-                    {
+                    if ($min != 0 && $strlen < $min) {
                         $this->_error('autov_length_lt_min', $_k);
 
                         return false;
                     }
-                    if ($max != 0 && $strlen > $max)
-                    {
+                    if ($max != 0 && $strlen > $max) {
                         $this->_error('autov_length_gt_max', $_k);
 
                         return false;
                     }
-                }
-                else
-                {
-                    if ($min != 0 && $value < $min)
-                    {
+                } else {
+                    if ($min != 0 && $value < $min) {
                         $this->_error('autov_value_lt_min', $_k);
 
                         return false;
                     }
-                    if ($max != 0 && $value > $max)
-                    {
+                    if ($max != 0 && $value > $max) {
                         $this->_error('autov_value_gt_max', $_k);
 
                         return false;
@@ -997,21 +930,17 @@ class BaseModel extends Object
                 }
 
                 /* 正则 */
-                if ($reg)
-                {
-                    if (!preg_match($reg, $value))
-                    {
+                if ($reg) {
+                    if (!preg_match($reg, $value)) {
                         $this->_error('check_match_error', $_k);
                         return false;
                     }
                 }
 
                 /* 自定义验证 */
-                if ($valid && function_exists($valid))
-                {
+                if ($valid && function_exists($valid)) {
                     $result = $valid($value);
-                    if ($result !== true)
-                    {
+                    if ($result !== true) {
                         $this->_error($result);
 
                         return false;
@@ -1019,19 +948,16 @@ class BaseModel extends Object
                 }
 
                 /* 过滤 */
-                if ($filter)
-                {
-                    $funs    = explode(',', $filter);
-                    foreach ($funs as $fun)
-                    {
+                if ($filter) {
+                    $funs = explode(',', $filter);
+                    foreach ($funs as $fun) {
                         function_exists($fun) && $value = $fun($value);
                     }
                     $data[$_sk][$_k] = $value;
                 }
             }
         }
-        if (!$is_multi)
-        {
+        if (!$is_multi) {
             $data = $data[0];
         }
 
@@ -1041,28 +967,27 @@ class BaseModel extends Object
     /**
      *  初始化查询参数
      *
-     *  @author Garbin
-     *  @param  array $params
-     *  @return array
+     * @author Garbin
+     *
+     * @param  array $params
+     *
+     * @return array
      */
     function _initFindParams($params)
     {
         $arr = array(
-            'include'  => array(),
-            'join'=> '',
+            'include' => array(),
+            'join' => '',
             'conditions' => '',
-            'order'      => '',
-            'fields'     => '',
-            'limit'      => '',
-            'count'      => false,
-            'index_key'  => $this->prikey,
+            'order' => '',
+            'fields' => '',
+            'limit' => '',
+            'count' => false,
+            'index_key' => $this->prikey,
         );
-        if (is_array($params))
-        {
+        if (is_array($params)) {
             return array_merge($arr, $params);
-        }
-        else
-        {
+        } else {
             $arr['conditions'] = $params;
             return $arr;
         }
@@ -1071,16 +996,17 @@ class BaseModel extends Object
     /**
      *  按指定的方式LEFT JOIN指定关系的表
      *
-     *  @author Garbin
-     *  @param  string $table
-     *  @param  string $join_object
-     *  @return string
+     * @author Garbin
+     *
+     * @param  string $table
+     * @param  string $join_object
+     *
+     * @return string
      */
     function _joinModel(&$table, $join)
     {
         $result = false;
-        if (empty($join))
-        {
+        if (empty($join)) {
             return false;
         }
 
@@ -1088,19 +1014,16 @@ class BaseModel extends Object
         $relation = preg_split('/,\s*/', $join);
         array_walk($relation, create_function('&$item, $key', '$item=trim($item);'));
 
-        foreach ($relation as $_r)
-        {
+        foreach ($relation as $_r) {
             /* 获取关系信息 */
-            if (!($_mi = $this->getRelation($_r)))
-            {
+            if (!($_mi = $this->getRelation($_r))) {
                 /* 没有该关系则跳过 */
                 continue;
             }
 
             /* 关联关系为$_mi的模型 */
             $join_string = $this->_getJoinString($_mi);
-            if ($join_string)
-            {
+            if ($join_string) {
                 /* 连接 */
                 $table .= $join_string;
                 $result = true;
@@ -1109,10 +1032,10 @@ class BaseModel extends Object
 
         return $result;
     }
+
     function _getJoinString($relation_info)
     {
-        switch ($relation_info['type'])
-        {
+        switch ($relation_info['type']) {
             case HAS_ONE:
                 $model =& m($relation_info['model']);
 
@@ -1125,13 +1048,12 @@ class BaseModel extends Object
 
                 /* 本表参考键=外表外键 */
                 return " LEFT JOIN {$model->table} {$model->alias} ON {$this->alias}.{$refer_key}={$model->alias}.{$relation_info['foreign_key']}{$ext_limit}";
-            break;
+                break;
             case BELONGS_TO:
                 /* 属于关系与拥有是一个反向的关系 */
                 $model =& m($relation_info['model']);
                 $be_related = $model->getRelation($relation_info['reverse']);
-                if (empty($be_related))
-                {
+                if (empty($be_related)) {
                     /* 没有找到反向关系 */
                     $this->_error('no_reverse_be_found', $relation_info['model']);
 
@@ -1140,27 +1062,29 @@ class BaseModel extends Object
                 $ext_limit = '';
                 !empty($relation_info['ext_limit']) && $ext_limit = ' AND ' . $this->_getExtLimit($relation_info['ext_limit'], $this->alias);
                 /* 获取参考键，默认是外表主键 */
-                $refer_key = isset($be_related['refer_key']) ? $be_related['refer_key'] :$model->prikey ;
+                $refer_key = isset($be_related['refer_key']) ? $be_related['refer_key'] : $model->prikey;
 
                 /* 本表外键=外表参考键 */
                 return " LEFT JOIN {$model->table} {$model->alias} ON {$this->alias}.{$be_related['foreign_key']} = {$model->alias}.{$refer_key}{$ext_limit}";
-            break;
+                break;
             case HAS_AND_BELONGS_TO_MANY:
                 /* 连接中间表，本表主键=中间表外键 */
                 $malias = isset($relation_info['alias']) ? $relation_info['alias'] : $relation_info['middle_table'];
                 $ext_limit = '';
                 $relation_info['ext_limit'] && $ext_limit = ' AND ' . $this->_getExtLimit($relation_info['ext_limit'], $malias);
                 return " LEFT JOIN {$this->_prefix}{$relation_info['middle_table']} {$malias} ON {$this->alias}.{$this->prikey} = {$malias}.{$relation_info['foreign_key']}{$ext_limit}";
-            break;
+                break;
         }
     }
 
     /**
      *    获取关系信息
      *
-     *    @author    Garbin
-     *    @param     string $relation_name
-     *    @return    array
+     * @author    Garbin
+     *
+     * @param     string $relation_name
+     *
+     * @return    array
      */
     function getRelation($relation_name = null)
     {
@@ -1170,22 +1094,21 @@ class BaseModel extends Object
     /**
      *    获取指定关系类型的关联信息
      *
-     *    @author    Garbin
-     *    @param     int $relation
-     *    @return    array
+     * @author    Garbin
+     *
+     * @param     int $relation
+     *
+     * @return    array
      */
     function getRelationByType($relation)
     {
-        if (empty($relation))
-        {
+        if (empty($relation)) {
             return $this->_relation;    //返回所有关系
         }
         $arr = array();
-        foreach ($this->_relation as $relation_name => $relation_info)
-        {
-            if ($relation_info['relation'] == $relation)
-            {
-                $arr[$relation_name]    =   $relation_info;
+        foreach ($this->_relation as $relation_name => $relation_info) {
+            if ($relation_info['relation'] == $relation) {
+                $arr[$relation_name] = $relation_info;
             }
         }
 
@@ -1195,16 +1118,17 @@ class BaseModel extends Object
     /**
      *  组合数据
      *
-     *  @author Garbin
-     *  @param  string  $relation_name  关系名称
-     *  @param  array   $assoc_data     关联的数据
-     *  @param  array   $pri_data       主表数据
-     *  @return array
+     * @author Garbin
+     *
+     * @param  string $relation_name 关系名称
+     * @param  array  $assoc_data 关联的数据
+     * @param  array  $pri_data 主表数据
+     *
+     * @return array
      */
     function assemble($relation_name, $assoc_data, $pri_data)
     {
-        if (empty($pri_data) || empty($assoc_data))
-        {
+        if (empty($pri_data) || empty($assoc_data)) {
             $this->_error('assemble_data_empty');
 
             return $pri_data;
@@ -1215,14 +1139,11 @@ class BaseModel extends Object
         $model =& m($relation_info['model']);
 
         /* 循环主数据集 */
-        foreach ($pri_data as $pk => $pd)
-        {
+        foreach ($pri_data as $pk => $pd) {
             /* 循环从数据集 */
-            foreach ($assoc_data as $ak => $ad)
-            {
+            foreach ($assoc_data as $ak => $ad) {
                 /* 当主表的主键值与外表的的外键值相等时，将该外表的数据加入到主表数据中键为$model->alias的数组中 */
-                if ($pd[$this->prikey] == $ad[$relation_info['foreign_key']])
-                {
+                if ($pd[$this->prikey] == $ad[$relation_info['foreign_key']]) {
                     $pd[$model->alias][$ak] = $ad;
                     unset($assoc_data[$ak]);    //减少循环次数
                 }
@@ -1236,36 +1157,30 @@ class BaseModel extends Object
     /**
      *    检查数据是否足够
      *
-     *    @author    Garbin
-     *    @param     array $data
-     *    @return    bool[true:足够,false:不足]
+     * @author    Garbin
+     *
+     * @param     array $data
+     *
+     * @return    bool[true:足够,false:不足]
      */
     function dataEnough($data)
     {
         $required_fields = $this->getRequiredFields();
-        if (empty($required_fields))
-        {
+        if (empty($required_fields)) {
             return true;
         }
         $is_multi = (key($data) === 0 && is_array($data[0]));
-        foreach ($required_fields as $field)
-        {
-            if ($is_multi)
-            {
-                foreach ($data as $key => $value)
-                {
-                    if (!isset($value[$field]))
-                    {
+        foreach ($required_fields as $field) {
+            if ($is_multi) {
+                foreach ($data as $key => $value) {
+                    if (!isset($value[$field])) {
                         $this->_error('data_not_enough', $field);
 
                         return false;
                     }
                 }
-            }
-            else
-            {
-                if (!isset($data[$field]))
-                {
+            } else {
+                if (!isset($data[$field])) {
                     $this->_error('data_not_enough', $field);
 
                     return false;
@@ -1279,18 +1194,15 @@ class BaseModel extends Object
     /**
      *    获取必须的字段列表
      *
-     *    @author    Garbin
-     *    @return    array
+     * @author    Garbin
+     * @return    array
      */
     function getRequiredFields()
     {
         $fields = array();
-        if (is_array($this->_autov))
-        {
-            foreach ($this->_autov as $key => $value)
-            {
-                if (isset($value['required']) && $value['required'])
-                {
+        if (is_array($this->_autov)) {
+            foreach ($this->_autov as $key => $value) {
+                if (isset($value['required']) && $value['required']) {
                     $fields[] = $key;
                 }
             }
@@ -1306,17 +1218,21 @@ class BaseModel extends Object
     {
         return $this->db->getOne($sql);
     }
+
     function getRow($sql)
     {
         return $this->db->getRow($sql);
     }
+
     function getCol($sql)
     {
         return $this->db->getCol($sql);
     }
+
     function getAll($sql)
     {
         return $this->db->getAll($sql);
     }
 }
+
 ?>

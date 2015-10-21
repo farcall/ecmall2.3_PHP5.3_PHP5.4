@@ -13,5 +13,5 @@ $db->query("DROP TABLE ".DB_PREFIX."lb_reward_log");
 $db->query("DROP TABLE ".DB_PREFIX."lb_rewardrule_config");
 $db->query("DROP TABLE ".DB_PREFIX."lb_tixian");
 $db->query("DROP TABLE ".DB_PREFIX."lb_transfer_money_log");
-
+$db->query("DROP TABLE ".DB_PREFIX."lb_recharge_log");
 

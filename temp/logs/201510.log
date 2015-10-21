@@ -146,3 +146,46 @@ Wed, 21 Oct 2015 22:59:41 +0800	[2]Missing argument 1 for FrontendApp::jslang(),
 Wed, 21 Oct 2015 22:59:46 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	263
 Wed, 21 Oct 2015 23:00:02 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	263
 Wed, 21 Oct 2015 23:00:06 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	263
+Wed, 21 Oct 2015 23:06:31 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Wed, 21 Oct 2015 23:06:37 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Wed, 21 Oct 2015 23:06:42 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Wed, 21 Oct 2015 23:27:05 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Wed, 21 Oct 2015 23:27:08 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Wed, 21 Oct 2015 23:27:10 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Wed, 21 Oct 2015 23:27:33 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Wed, 21 Oct 2015 23:41:19 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Wed, 21 Oct 2015 23:41:27 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Wed, 21 Oct 2015 23:41:33 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Wed, 21 Oct 2015 23:41:42 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 00:09:33 +0800	[256]MySQL Error[1054]: Unknown column 'buyer' in 'where clause'
+MySQL Query:SELECT *,lb_money.user_id FROM ecmall_lb_money lb_money WHERE 'user_name'=buyer
+Wrong File:  D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\model\mysql.php[534]	\eccore\model\mysql.php	286
+Thu, 22 Oct 2015 00:12:01 +0800	[256]MySQL Error[1064]: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''buyer''' at line 1
+MySQL Query:SELECT *,lb_money.user_id FROM ecmall_lb_money lb_money WHERE user_name='buyer''
+Wrong File:  D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\model\mysql.php[534]	\eccore\model\mysql.php	286
+Thu, 22 Oct 2015 01:06:08 +0800	[256]MySQL Error[1064]: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') WHERE user_id=3' at line 1
+MySQL Query:UPDATE ecmall_lb_money SET money_used=246,motify_time=time() WHERE user_id=3
+Wrong File:  D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\model\model.base.php[502]	\eccore\model\mysql.php	286
+Thu, 22 Oct 2015 01:07:01 +0800	[256]MySQL Error[1054]: Unknown column 'motify_time' in 'field list'
+MySQL Query:UPDATE ecmall_lb_money SET money_used=134,motify_time=1445447221 WHERE user_id=3
+Wrong File:  D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\model\model.base.php[502]	\eccore\model\mysql.php	286
+Thu, 22 Oct 2015 01:07:52 +0800	[256]MySQL Error[1064]: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+MySQL Query:UPDATE ecmall_lb_money SET money_used=1,modify_time=1445447272 WHERE user_id=
+Wrong File:  D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\model\model.base.php[502]	\eccore\model\mysql.php	286
+Thu, 22 Oct 2015 01:22:40 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Thu, 22 Oct 2015 01:22:51 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Thu, 22 Oct 2015 01:23:08 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Thu, 22 Oct 2015 01:24:44 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:24:54 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:24:59 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:25:05 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:25:09 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:35:59 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Thu, 22 Oct 2015 01:36:02 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Thu, 22 Oct 2015 01:36:05 +0800	[2]Missing argument 1 for BackendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\admin\app\backend.base.php	123
+Thu, 22 Oct 2015 01:38:22 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:38:30 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:38:33 +0800	[2]Missing argument 1 for FrontendApp::jslang(), called in D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\controller\app.base.php on line 127 and defined	\app\frontend.base.php	262
+Thu, 22 Oct 2015 01:40:07 +0800	[256]MySQL Error[1064]: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+MySQL Query:UPDATE ecmall_lb_money SET money_used=1,modify_time=1445449207 WHERE user_id=
+Wrong File:  D:\phpStudy\WWW\www.600gou.com\wwwroot\eccore\model\model.base.php[502]	\eccore\model\mysql.php	286
