@@ -1,0 +1,87 @@
+{include file="header.html"}
+<script language="javascript">
+$(function(){
+    $('#sotime,#endtime').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.index_yonghuzijinguanli}</p>
+    <ul class="subnav">
+        <li><a class="btn3" href="index.php?module=lb_money&act=user_money_list">资金列表</a></li>
+        <li><a class="btn3" href="index.php?module=lb_money&act=user_money_add">增加用户金额</a></li>
+        <li><span>充值记录</span></li>
+        <li><a class="btn3" href="index.php?module=lb_money&act=user_transfermoney_log">转账记录</a></li>
+        <li><a class="btn3" href="index.php?module=lb_money&act=user_reward_log">奖励(返现)记录</a></li>
+        <li><a class="btn3" href="index.php?module=lb_money&act=index">{$lang.index_fanhuidaohang}</a></li>
+    </ul>
+</div>
+
+<div class="mrightTop">
+    <div class="fontl">
+       <form method="get">
+            <div class="left">
+              <input name="module" type="hidden" id="module" value="lb_money" />
+              <input name="act" type="hidden" id="act" value="user_rechargemoney_log" />
+              会员名称:
+              <input name="soname" type="text" id="soname" value="<?php echo $_GET["soname"];?>" />
+			  添加时间:
+              <input name="sotime" type="text" id="sotime" value="<?php echo $_GET["sotime"];?>" size="10" maxlength="10" />
+              &nbsp;{$lang.so_zhi}&nbsp;<input name="endtime" type="text" id="endtime" value="<?php echo $_GET["endtime"];?>" size="10" maxlength="10" />
+                <input type="submit" class="formbtn" value="{$lang.so_soso}" />
+            </div>
+      </form>
+    </div>
+    <div class="fontr">
+
+    </div>
+</div>
+
+<div class="tdare">
+    <table width="100%" cellspacing="0">
+
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input id="checkall_1" type="checkbox" class="checkall"/></td>
+            <td align="left">ID</td>
+            <td>会员名称</td>
+            <td>充值金额</td>
+            <td>充值方式</td>
+            <td>充值编号</td>
+            <td>经手管理员</td>
+            <td>备注信息</td>
+			<td width="120">操作时间</td>
+            <td class="handler">操作</td>
+        </tr>
+
+        <!--{foreach from=$index item=val key=key}-->
+        <tr class="tatr2">
+            <td width="20" class="firstCell">
+            <input type="checkbox" class="checkitem" value="{$key}" />
+            </td>
+            <td align="left"><b>{$val.log_id}</b></td>
+            <td>{$val.user_name}</td>
+            <td><font color="#FF0000">{$val.recharge_money}</font></td>
+            <td>{$val.recharge_method}</td>
+            <td>{$val.recharge_id}</td>
+            <td>{$val.admin_name}</td>
+            <td>{$val.recharge_message}</td>
+			<td>{$val.add_time|date:y-m-d H:i:s}</td>
+            <td class="handler">
+            <a href="#">删除</a></td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="8">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $index}-->
+<div id="dataFuncs">
+    <div id="batchAction" class="left paddingT15"><input type="checkbox" class="checkall" />
+      <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="#" presubmit="confirm('{$lang.drop_confirm}');" />
+    </div>
+    <div class="pageLinks">{include file=page.bottom.html}</div>
+    <div class="clear"></div>
+  </div>
+  <!--{/if}-->
+</div>
+{include file="footer.html"}

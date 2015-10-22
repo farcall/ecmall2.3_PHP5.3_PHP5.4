@@ -11,9 +11,14 @@ $(function(){
 <div id="rightTop">
     <p>用户资金管理</p>
     <ul class="subnav">
-		<li><a class="btn3" href="index.php?module=lb_money&act=user_money_list">资金列表</a></li>
-		<li><a class="btn3" href="index.php?module=lb_money&act=user_money_add">增加用户资金</a></li>
-		<li><a class="btn3" href="index.php?module=lb_money&act=user_money_log">资金流水日志</a></li>
+        <ul class="subnav">
+            <li><a class="btn3" href="index.php?module=lb_money&act=user_money_list">资金列表</a></li>
+            <li><a class="btn3" href="index.php?module=lb_money&act=user_money_add">增加用户金额</a></li>
+            <li><a class="btn3" href="index.php?module=lb_money&act=user_rechargemoney_log">充值记录</a></li>
+            <li><a class="btn3" href="index.php?module=lb_money&act=user_transfermoney_log">转账记录</a></li>
+            <li><a class="btn3" href="index.php?module=lb_money&act=user_reward_log">奖励(返现)记录</a></li>
+            <li><a class="btn3" href="index.php?module=lb_money&act=index">{$lang.index_fanhuidaohang}</a></li>
+        </ul>
     </ul>
 </div>
 
