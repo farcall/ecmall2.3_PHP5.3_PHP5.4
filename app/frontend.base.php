@@ -605,7 +605,44 @@ class MemberbaseApp extends MallbaseApp
             ),
         );
 
+        /*资金管理-600gou*/
+        $menu['zijinguanli']=array(
+            'name'=>'资金管理',
+            'text'=>'资金管理',
+            'submenu'=>array(
+                'zhanghushezhi'=>array(
+                    'text'=>'账户设置',
+                    'url'=>'index.php?app=lb_money&act=zhanghushezhi',
+                    'name'=>'账户设置',
+                    'icon'=>'ico15',
+                ),
+                'jiaoyichaxun'=>array(
+                    'text'=>'交易查询',
+                    'url'=>'index.php?app=lb_money&act=jiaoyichaxun',
+                    'name'=>'交易查询',
+                    'icon'=>'ico19',
+                ),
+               'yuechaxun'=>array(
+                   'text'=>'余额查询',
+                   'url'=>'index.php?app=lb_money&act=yuechaxun',
+                   'name'=>'余额查询',
+                   'icon'=>'ico5',
+               ),
+                'zaixianchongzhi'=>array(
+                    'text'=>'在线充值',
+                    'url'=>'index.php?app=lb_money&act=zaixianchongzhi',
+                    'name'=>'在线充值',
+                    'icon'=>'ico8',
+                ),
+                'zhuanzhang'=>array(
+                    'text'=>'转账',
+                    'url'=>'index.php?app=lb_money&act=zhuanzhang',
+                    'name'=>'转账',
+                    'icon'=>'ico16',
+                ),
 
+            ),
+        );
         /* 我是买家 */
         $menu['im_buyer'] = array(
             'name' => 'im_buyer',

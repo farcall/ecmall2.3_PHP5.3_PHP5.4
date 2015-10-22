@@ -213,7 +213,7 @@ body { font-size: 12px; font-family: Arial, Verdana, sans-serif; }
 .detail .ware_box { width: 346px; height: 100px; padding: 10px 15px 0; overflow: auto; }
 .detail .ware { width: 330px; overflow: hidden; margin-bottom: 10px; }
 .detail .ware_pic { float: left; width: 50px; height: 50px; margin-right: 10px; overflow: hidden; background: #eee; }
-.detail .ware_con { float: left; width: 270px; overflow: }
+.detail .ware_con { float: left; width: 270px; overflow:visible }
 .detail .ware_text { color: #3e3e3e; }
 .detail .ware_text a { color: #3e3e3e; text-decoration: none; }
 .detail .ware_text a:hover { text-decoration: underline; }
@@ -1031,7 +1031,7 @@ form label.validate_right { padding-left:12px; background:transparent url(../ima
 .comtext2 p {float: left; margin-right: 30px; display: inline;}
 .comtext2 p span {color: #fe5400; font-weight: bold;}
 .font_big {font-size: 16px; color:#FE5400; font-weight:bold; }
-.evaluate {float: left; width: 73px; height: 25px; padding: 0; background: url(images/member/evaluate.gif); border: 0; font-size: 12px; font-weight: bold; color: #fff;}
+.evaluate {float: left; width: 73px; height: 25px; padding: 0; background: url(../images/member/evaluate.gif); border: 0; font-size: 12px; font-weight: bold; color: #fff;}
 
 .judge_of {word-spacing: 5px; overflow: hidden; width: 948px; color: #7d7d7d; border-bottom: 1px solid #dcdcdc; line-height: 30px; padding-left: 24px;}
 .judge_of p {margin-right: 20px; float: left;}
