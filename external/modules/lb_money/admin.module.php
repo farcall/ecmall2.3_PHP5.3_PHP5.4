@@ -18,13 +18,6 @@ class Lb_moneyModule extends AdminBaseModule
     function  Lb_money()
     {
         parent::__construct();
-
-
-        $this->lb_line_order_mod =& m('lb_line_order');
-        $this->lb_reward_log_mod =& m('lb_reward_log');
-        $this->lb_rewardrule_config_mod =& m('lb_rewardrule_config');
-        $this->lb_tixian_mod =& m('lb_tixian');
-        $this->lb_transfer_money_log_mod =& m('lb_transfer_money_log');
     }
 
     function  index()
@@ -44,7 +37,7 @@ class Lb_moneyModule extends AdminBaseModule
         $beginmoney = (isset($_GET['somoney']) && $_GET['somoney'] != '') ? $_GET['somoney'] : '';
         $endmoney = (isset($_GET['endmoney']) && $_GET['endmoney'] != '') ? $_GET['endmoney'] : '';
 
-        $page = $this->_get_page(3);
+        $page = $this->_get_page(20);
         /*2检查数据合法性*/
         //金币只能是整数
         if ((preg_match("/[^0.-9]/", $beginmoney)) or (preg_match("/[^0.-9]/", $endmoney)))

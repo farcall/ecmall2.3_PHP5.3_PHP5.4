@@ -1,6 +1,33 @@
 <?php
 
 return array(
+    '600商城' => array(
+        'text'=>'奖励中心',
+        'subtext'=>'用户资金管理',
+        'default'=>'用户资金管理',
+        'children'=>array(
+            '用户资金管理'=>array(
+                'text'=>'用户资金管理',
+                'url'=>'index.php?module=lb_money&act=user_money_list',
+            ),
+            '增加用户额度'=>array(
+                'text'=>'增加用户额度',
+                'url'=>'index.php?module=lb_money&act=user_money_add',
+            ),
+            '充值记录'=>array(
+                'text'=>'充值记录',
+                'url'=>'index.php?module=lb_money&act=user_rechargemoney_log',
+            ),
+            '转账记录'=>array(
+                'text'=>'转账记录',
+                'url'=>'index.php?module=lb_money&act=user_transfermoney_log',
+            ),
+            '奖励(返现)记录'=>array(
+                'text'=>'奖励(返现)记录',
+                'url'=>'index.php?module=lb_money&act=user_reward_log',
+            ),
+        ),
+    ),
     'dashboard' => array(
         'text'      => Lang::get('dashboard'),
         'subtext'   => Lang::get('offen_used'),
