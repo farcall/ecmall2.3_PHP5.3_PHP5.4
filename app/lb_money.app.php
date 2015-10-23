@@ -10,7 +10,6 @@ class Lb_moneyApp extends MemberbaseApp{
 
     function __construct(){
         parent::__construct();
-     //   header("Content-type: text/html; charset=utf-8");
     }
     /**
      * 作用:转账设置
@@ -75,14 +74,60 @@ class Lb_moneyApp extends MemberbaseApp{
     function tixian(){
         //todo 提现
         if(IS_POST){
+            $tx_money = isset($_POST['tx_money'])?($_POST['tx_money']):'';
+            $pass_pay = isset($_POST['pass_pay'])?($_POST['pass_pay']):'';
+            if(empty($tx_money) or empty($pass_pay)){
+                $this->show_warning("警告_金钱数量和支付密码不能为空");
+                return;
+            }
 
+            if(!is_numeric($tx_money) or ($tx_money <= 0)){
+                $this->show_warning("警告请输入合法金额");
+                return;
+            }
+
+            $user_id = $this->visitor->get('user_id');
+            $lb_money_mod = &m('lb_money');
+            $data = $lb_money_mod->get_info($user_id);
+            if($data['money_used'] < $tx_money){
+                $this->show_warning("警告_提现金额不得大于可用金额");
+                return;
+            }
+            if(md5($pass_pay) != $data['pass_pay']){
+                $this->show_warning("警告_支付密码错误");
+                return;
+            }
+
+            //修改金额数量
+            $data['money_used'] = $data['money_used'] - $tx_money;
+            $data['money_freeze'] = $data['money_freeze'] + $tx_money;
+            $lb_money_mod->edit('user_id=' . $user_id, $data);
+
+            //提交等待管理员审核
+            $lb_tixian_log = array(
+                'user_id'=>$user_id,
+                'user_name'=>$data['user_name'],
+                'bank_name'=>$data['bank_name'],
+                'bank_card'=>$data['bank_card'],
+                'bank_username'=>$data['bank_username'],
+                'remark'=>'',
+                'add_time'=>time(),
+                'check_time'=>0,
+                'money'=>$tx_money,
+                'status'=>0  //状态(体现中0;取消提现-1;提现成功1)
+            );
+
+            $lb_tixian_mod = &m('lb_tixian');
+            $lb_tixian_mod->add($lb_tixian_log);
+            $this->json_result('retval','msg');
+            return;
         }
         else{
 
             $user_id = $this->visitor->get('user_id');
             $lb_money_mod = &m('lb_money');
             $data = $lb_money_mod->get_info($user_id);
-            $this->_curitem('提现申请');
+            $this->_curitem(Lang::get('tixianshenqing'));
 
             $data['zongjine'] = $data['money_used']+$data['money_freeze'];
             $this->assign('money',$data);
@@ -97,8 +142,6 @@ class Lb_moneyApp extends MemberbaseApp{
      */
     function zhanghushezhi()
     {
-
-        //todo 账户设置
         if(IS_POST){
             $bank_name = isset($_POST['yes_bank_name'])?($_POST['yes_bank_name']):'';
             $bank_address = isset($_POST['yes_bank_address'])?($_POST['yes_bank_address']):'';

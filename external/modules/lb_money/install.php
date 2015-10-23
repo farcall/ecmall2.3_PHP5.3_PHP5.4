@@ -87,6 +87,7 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_tixian` (
   `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '申请提现时间',
   `check_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '审核提现时间',
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态(体现中0;取消提现-1;提现成功1)',
+  `money` int(10) NOT NULL DEFAULT '0' COMMENT '提现金额',
   PRIMARY KEY (`tixian_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf32 COMMENT='提现申请表';
 ");

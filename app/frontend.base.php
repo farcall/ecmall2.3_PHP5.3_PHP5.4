@@ -640,6 +640,12 @@ class MemberbaseApp extends MallbaseApp
                     'name'=>Lang::get('zhuanzhang'),
                     'icon'=>'ico16',
                 ),
+                'tixian'=>array(
+                    'text'=>Lang::get('tixian'),
+                    'url'=>'index.php?app=lb_money&act=tixian',
+                    'name'=>Lang::get('tixian'),
+                    'icon'=>'ico18',
+                )
 
             ),
         );

@@ -13,11 +13,11 @@ return array(
 'yuechaxun'=>'余额查询',
 'zaixianshenqing'=>'在线充值',
 'zhuanzhang'=>'转账',
-
+'tixian'=>'提现',
 //我的账户
-'zhanghuzongjine'=>'账户总金额',
-'keyongjine'=>'可用金额',
-'dongjiejine'=>'冻结金额',
+'zhanghuzongjine'=>'账户总金额:',
+'keyongjine'=>'可用金额:',
+'dongjiejine'=>'冻结金额:',
 
 //账户设置
 'kaihuyinhang'=>'开户银行:',
@@ -25,6 +25,10 @@ return array(
 'kaihumingcheng'=>'开户名称:',
 'shezhitijiao'=>'设置提交',
 'zhanghuyijinggengxinwancheng' => '账户已经更新完成',
+
+//提现
+'tixianshenqing' => '提现申请',
+'bunengxiaoyuyikuaiqianerqiebixushizhengshu'=>'不能小于一块钱而且必须是整数',
 
 //我的帐户 导航
 'wodezhanghu'         => '我的帐户',

@@ -19,7 +19,7 @@
                       <tr>
 					  <td><span style="font-size:14px">
                         {if $money}
-                            {$lang.zhanghuzongjinere}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.zongjine}</span>{$lang.yuan}<br/>
+                            {$lang.zhanghuzongjine}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.zongjine}</span>{$lang.yuan}<br/>
                             {$lang.keyongjine}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.money_used}</span>{$lang.yuan}<br/>
                             {$lang.dongjiejine}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.money_freeze}</span>{$lang.yuan}<br/>
                         {/if}
@@ -50,16 +50,16 @@
 				  <!--{if $money.bank_card==""}-->
 				  <a href="?app=lb_money&act=zhanghushezhi">{$lang.qingxianshezhizhanghao}</a>
 				  <!--{else}-->
-				  <?php echo substr($this->_var['val']['bank_sn'],0,4);?><font color="#FF0000">****</font><?php echo substr($this->_var['val']['bank_sn'],-4);?>
+				  <?php echo substr($this->_var['money']['bank_card'],0,4);?><font color="#FF0000">****</font><?php echo substr($this->_var['money']['bank_card'],-4);?>
 				  <span>&nbsp;&nbsp;&nbsp;&nbsp;{$lang.huming}：</span>
-				  <font color="#FF0000">*</font><?php echo $this->_var['val']['bank_username'];?>&nbsp;/&nbsp;<?php echo $this->_var['val']['bank_name'];?>
+				  <font color="#FF0000">*</font><?php echo mb_substr($this->_var['money']['bank_username'],1,10,'utf-8');?>&nbsp;/&nbsp;<?php echo $this->_var['money']['bank_name'];?>
 				  <!--{/if}-->
 				  <BR>
                   <span>{$lang.tixianjine}：</span>
                   <input name="tx_money" type="text" id="tx_money" size="8" onkeyup="value=value.replace(/[^\d]/g,'')">
-                  &nbsp;{$lang.yuan}<BR>
+                  &nbsp;{$lang.yuan}&nbsp;<font color="#FF0000">{$lang.bunengxiaoyuyikuaiqianerqiebixushizhengshu}</font>}<BR>
                       <span>{$lang.zhifumima}：</span>
-                      <input type="pass_pay" type="text" id="pass_pay" size="15"/>
+                      <input type="pass_pay" type="text" name="pass_pay" id="pass_pay" size="15"/>
                   <BR><BR><span><input type="submit" class="money_btn" value="{$lang.tixianshenqing}" /></span>
                 </form>	
 				
