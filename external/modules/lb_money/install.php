@@ -18,6 +18,10 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_money` (
   `money_freeze` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '冻结资金',
   `add_time` int(10) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `modify_time` int(10) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `bank_name` varchar(60) NOT NULL DEFAULT '' COMMENT '用于提现的银行名称',
+  `bank_card` varchar(32) NOT NULL DEFAULT '' COMMENT '用于提现的银行卡编号',
+  `bank_username` varchar(32) NOT NULL DEFAULT '' COMMENT '用于提现的银行持有人姓名',
+    `bank_address` varchar(255) NOT NULL DEFAULT '' COMMENT '所在地区,非银行可为空',
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='虚拟金币表';");
 //lb_line_order

@@ -1,0 +1,48 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+          <ul class="tab">
+                <li class="active">账户详情</li>
+          </ul>
+	  
+        <div class="wrap margin1">
+            <div class="public table">
+				<div class="information_index" style="overflow:hidden; margin: 0px 0 -15px;">
+                 <div class="info">
+                        <h3 class="margin2">
+                            <span>你好！{$visitor.user_name}，欢迎使用六百商城网络购物</span>
+                        </h3>
+                      <table class="width6">
+                      <tr>
+					  <td><span style="font-size:14px">
+
+                        {if $money}
+                            {$lang.zhanghuzongjinere}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.zongjine}</span>{$lang.yuan}<br/>
+                            {$lang.keyongjine}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.money_used}</span>{$lang.yuan}<br/>
+                            {$lang.dongjiejine}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.money_freeze}</span>{$lang.yuan}<br/>
+                        {/if}
+
+
+					  </td>
+                      </tr>
+                      <tr>
+                      <td>上次登录IP: {$visitor.last_ip}<br>
+                                   上次登录时间:{$visitor.last_login|date:complete}<br>
+                                    
+                                   <A href="index.php?app=lb_money&act=zaixianchongzhi">立即充值</A>&nbsp;|&nbsp;<A
+class=G href="index.php?app=lb_money&act=tixian"><span style="color:green;">提现</span></A>
+					  </td> 
+
+                      </tr>
+                      </table>
+                  </div>
+                </div>			
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+<div class="clear"></div>
+{include file=footer.html}

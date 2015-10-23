@@ -1060,3 +1060,15 @@ form label.validate_right { padding-left:12px; background:transparent url(../ima
 #short_msg_desc { margin-left:80px;margin-top:10px; }
 #short_msg_desc a { color:#0099CC; }
 #short_msg_desc div { display:none;color:#646665;border:1px solid #CCCCCC;padding:5px;width:340px;background-color:#F5F5F5;line-height:25px; }
+
+
+/*600商城-QQ:435795*/
+.money_btn {
+    border: 0;
+    width: 120px;
+    height: 32px;
+    background: url(../images/member/btn.gif) no-repeat 0 -253px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #3f3d3e;
+}

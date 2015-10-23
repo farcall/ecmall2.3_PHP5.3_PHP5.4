@@ -607,37 +607,37 @@ class MemberbaseApp extends MallbaseApp
 
         /*资金管理-600gou*/
         $menu['zijinguanli']=array(
-            'name'=>'资金管理',
-            'text'=>'资金管理',
+            'name'=>Lang::get('zijinguanli'),
+            'text'=>Lang::get('zijinguanli'),
             'submenu'=>array(
-                'zhanghushezhi'=>array(
-                    'text'=>'账户设置',
-                    'url'=>'index.php?app=lb_money&act=zhanghushezhi',
-                    'name'=>'账户设置',
+                'myzhanghu'=>array(
+                    'text'=>Lang::get('myzhanghu'),
+                    'url'=>'index.php?app=lb_money&act=myzhanghu',
+                    'name'=>Lang::get('myzhanghu'),
                     'icon'=>'ico15',
                 ),
                 'jiaoyichaxun'=>array(
-                    'text'=>'交易查询',
+                    'text'=>Lang::get('jiaoyichaxun'),
                     'url'=>'index.php?app=lb_money&act=jiaoyichaxun',
-                    'name'=>'交易查询',
+                    'name'=>Lang::get('jiaoyichaxun'),
                     'icon'=>'ico19',
                 ),
                'yuechaxun'=>array(
-                   'text'=>'余额查询',
+                   'text'=>Lang::get('yuechaxun'),
                    'url'=>'index.php?app=lb_money&act=yuechaxun',
-                   'name'=>'余额查询',
+                   'name'=>Lang::get('yuechaxun'),
                    'icon'=>'ico5',
                ),
                 'zaixianchongzhi'=>array(
-                    'text'=>'在线充值',
+                    'text'=>Lang::get('zaixianchongzhi'),
                     'url'=>'index.php?app=lb_money&act=zaixianchongzhi',
-                    'name'=>'在线充值',
+                    'name'=>Lang::get('zaixianchongzhi'),
                     'icon'=>'ico8',
                 ),
                 'zhuanzhang'=>array(
-                    'text'=>'转账',
+                    'text'=>Lang::get('zhuanzhang'),
                     'url'=>'index.php?app=lb_money&act=zhuanzhang',
-                    'name'=>'转账',
+                    'name'=>Lang::get('zhuanzhang'),
                     'icon'=>'ico16',
                 ),
 

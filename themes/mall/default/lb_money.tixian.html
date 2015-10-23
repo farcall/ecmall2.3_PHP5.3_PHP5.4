@@ -1,0 +1,78 @@
+{include file=member.header.html}
+
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+          <ul class="tab">
+				<li class="active">提现申请</li>
+          </ul>
+
+        <div class="wrap margin1">
+            <div class="public table">
+				<div class="information_index" style="overflow:hidden; margin: 0px 0 -15px;">
+                 <div class="info">
+                        <h3 class="margin2">
+                            <span>{$lang.hello}！{$visitor.user_name}</span>
+                        </h3>
+<table class="width6">
+                      <tr>
+					  <td><span style="font-size:14px">
+                        {if $money}
+                            {$lang.zhanghuzongjinere}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.zongjine}</span>{$lang.yuan}<br/>
+                            {$lang.keyongjine}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.money_used}</span>{$lang.yuan}<br/>
+                            {$lang.dongjiejine}<span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money.money_freeze}</span>{$lang.yuan}<br/>
+                        {/if}
+
+					  </td>
+                      </tr>
+                      <tr>
+                      <td>{$lang.shangcidengluip}: {$visitor.last_ip}<br>
+                                    {$lang.shangcidenglushijian}:{$visitor.last_login|date:complete}<br> 
+
+					  </td> 
+
+                      </tr>
+                      </table>
+                  </div>
+                </div>			
+            </div>
+        </div>
+			  
+
+
+         <div class="wrap">
+            <div class="public table">
+				  <h3 class="title" style="margin: -10px 0 20px; color:#3E3E3E">{$lang.zhanghushezhi}</h3>
+                  <div style="color:#646665;float:left;font-size:12px;font-weight:normal;line-height:30px;">
+				  <form name="to_users" onSubmit="return tousers();" action="index.php?app=lb_money&act=tixian" method="post">
+				  <span>{$lang.tixianzhanghu}：</span>
+				  <!--{if $money.bank_card==""}-->
+				  <a href="?app=lb_money&act=zhanghushezhi">{$lang.qingxianshezhizhanghao}</a>
+				  <!--{else}-->
+				  <?php echo substr($this->_var['val']['bank_sn'],0,4);?><font color="#FF0000">****</font><?php echo substr($this->_var['val']['bank_sn'],-4);?>
+				  <span>&nbsp;&nbsp;&nbsp;&nbsp;{$lang.huming}：</span>
+				  <font color="#FF0000">*</font><?php echo $this->_var['val']['bank_username'];?>&nbsp;/&nbsp;<?php echo $this->_var['val']['bank_name'];?>
+				  <!--{/if}-->
+				  <BR>
+                  <span>{$lang.tixianjine}：</span>
+                  <input name="tx_money" type="text" id="tx_money" size="8" onkeyup="value=value.replace(/[^\d]/g,'')">
+                  &nbsp;{$lang.yuan}<BR>
+                      <span>{$lang.zhifumima}：</span>
+                      <input type="pass_pay" type="text" id="pass_pay" size="15"/>
+                  <BR><BR><span><input type="submit" class="money_btn" value="{$lang.tixianshenqing}" /></span>
+                </form>	
+				
+			</div>
+         </div>
+		</div>		
+
+
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0">
+</iframe>
+{include file=footer.html}
