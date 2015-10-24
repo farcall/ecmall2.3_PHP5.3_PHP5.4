@@ -214,4 +214,5 @@ class Lb_moneyModule extends AdminBaseModule
         $this->assign("index",$data);
         $this->display("user_rechargemoney_log.html");
     }
+
 }

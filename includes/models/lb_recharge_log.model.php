@@ -15,4 +15,6 @@ class Lb_recharge_logModel extends BaseModel{
 
     /* 模型的名称 */
     var $_name   = 'lb_recharge_log';
+
+
 }

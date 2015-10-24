@@ -46,6 +46,7 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_line_order` (
 //lb_reward_log
 $db->query("CREATE TABLE `".DB_PREFIX."lb_reward_log` (
   `log_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID',
+  `reward_sn` varchar(32) NOT NULL DEFAULT '' COMMENT '奖励序列号',
   `user_id` int(10) NOT NULL DEFAULT '0' COMMENT '用户ID',
   `user_name` varchar(60) NOT NULL DEFAULT '' COMMENT '奖励用户名称',
   `reward_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '奖励金额',
@@ -64,6 +65,7 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_rewardrule_config` (
 //lb_recharge_log
 $db->query("CREATE TABLE `".DB_PREFIX."lb_recharge_log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID 主键',
+  `recharge_sn` varchar(32) NOT NULL DEFAULT '' COMMENT '充值序列号',
   `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
   `user_name` varchar(60) NOT NULL DEFAULT '' COMMENT '用户名',
   `recharge_money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '转账额度',
@@ -78,6 +80,7 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_recharge_log` (
 //lb_tixian
 $db->query("CREATE TABLE `".DB_PREFIX."lb_tixian` (
   `tixian_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '提现表主键',
+  `tixian_sn` varchar(255) NOT NULL DEFAULT '' COMMENT '系统生成的提现号',
   `user_id` int(10) NOT NULL DEFAULT '0' COMMENT '申请提现用户ID',
   `user_name` varchar(60) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '申请提现用户',
   `bank_name` varchar(60) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '银行名称(比如工商银行,支付宝)',
@@ -94,6 +97,7 @@ $db->query("CREATE TABLE `".DB_PREFIX."lb_tixian` (
 //lb_transfer_money_log
 $db->query("CREATE TABLE `".DB_PREFIX."lb_transfer_money_log` (
   `log_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '日志ID主键',
+  `transfer_sn` varchar(60) NOT NULL DEFAULT '' COMMENT '系统生成转账订单号',
   `startuser_id` int(10) NOT NULL DEFAULT '0' COMMENT '转账发起人ID',
   `startuser_name` varchar(60) NOT NULL DEFAULT '' COMMENT '转账发起人名称',
   `enduser_id` int(10) NOT NULL DEFAULT '0' COMMENT '转账接受人ID',

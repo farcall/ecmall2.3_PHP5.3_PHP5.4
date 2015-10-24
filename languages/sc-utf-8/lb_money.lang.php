@@ -4,7 +4,7 @@ return array(
 'money_name'    => '站内余额支付系统',
 'money_miaosu'    => '安装以后，用户可以使用站内资金功能',
 'money_zuozhe'    => 'QQ:435795',
-
+'xuhao'=>'序号',
 
 //导航
 'zijinguanli'=>'资金管理',
@@ -14,6 +14,7 @@ return array(
 'zaixianshenqing'=>'在线充值',
 'zhuanzhang'=>'转账',
 'tixian'=>'提现',
+
 //我的账户
 'zhanghuzongjine'=>'账户总金额:',
 'keyongjine'=>'可用金额:',
@@ -29,7 +30,18 @@ return array(
 //提现
 'tixianshenqing' => '提现申请',
 'bunengxiaoyuyikuaiqianerqiebixushizhengshu'=>'不能小于一块钱而且必须是整数',
-
+'tixianrizhi'=>'提现日志',
+'tixianshenhezhong'=>'提现审核中',
+'tixianchenggong'=>'提现成功',
+'tixianshibaizijiquxiao'=>'提现失败.自己取消',
+'tixianshibaiguanliyuanjujue'=>'提现失败,管理员拒绝',
+'shenqingshijian'=>'申请时间',
+'yijingquxiao'=>'已经取消',
+'jinggao_qingbuyaochangshiquxiaobierendeshenqing'=>'警告,请不要尝试取消别人的提现申请!',
+'chongxinshenqing'=>'重新申请',
+'quxiaotixian'=>'取消提现',
+'tixianshenqingtijiaochenggong'=>'提现申请提交成功',
+'tixianquxiaoshenqingchenggong'=>'提现取消申请成功',
 //我的帐户 导航
 'wodezhanghu'         => '我的帐户',
 'mairuchaxun'         => '买入查询',
@@ -259,7 +271,7 @@ return array(
 'duibuqi_zhanghuyuebuzu'  => '对不起：帐户余额不足!',
 'cuowu_zhifumimabunengweikong'  => '错误：支付密码不能为空!',
 'cuowu_zhifumimayanzhengshibai'  => '错误：支付密码验证失败!',
-
+'cuowu_jinqianshulianghezhifumimabunengweikong'=>'错误_金钱数量和支付密码不能为空',
 'tixian_yonghud'  => '用户：',
 'tixianshenqingjine'  => ' 申请金额',
 'dengdaitongzhi'  => '等待通知',

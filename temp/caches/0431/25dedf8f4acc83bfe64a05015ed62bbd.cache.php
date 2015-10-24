@@ -1,12 +1,17 @@
 <?php
 /**
  *  @Created By ECMall PhpCacheServer
- *  @Time:2015-10-23 01:38:09
+ *  @Time:2015-10-24 21:52:23
  */
 
 if(filemtime(__FILE__) + 86400 < time())return false;
 
 return array (
+  24 => 
+  array (
+    'goods_id' => '24',
+    'goods_name' => '阿迪达斯花式运动鞋',
+  ),
   28 => 
   array (
     'goods_id' => '28',
@@ -22,40 +27,35 @@ return array (
     'goods_id' => '20',
     'goods_name' => '小脚牛仔铅笔裤',
   ),
-  24 => 
+  5 => 
   array (
-    'goods_id' => '24',
-    'goods_name' => '阿迪达斯花式运动鞋',
+    'goods_id' => '5',
+    'goods_name' => '2009耐克新款运动鞋',
   ),
-  10 => 
+  21 => 
   array (
-    'goods_id' => '10',
-    'goods_name' => '家居横纹休闲长裙',
+    'goods_id' => '21',
+    'goods_name' => '09春季新款简约大方高雅修身针织连衣裙983配腰带',
   ),
-  26 => 
+  6 => 
   array (
-    'goods_id' => '26',
-    'goods_name' => '喜皮风格牛仔短裤',
+    'goods_id' => '6',
+    'goods_name' => '包邮韩版经典长袖雪纺下摆针织连衣裙',
   ),
-  11 => 
+  22 => 
   array (
-    'goods_id' => '11',
-    'goods_name' => '耐克红粉世家运动鞋',
+    'goods_id' => '22',
+    'goods_name' => '新款多用型穿珠运动长裤',
   ),
-  27 => 
+  7 => 
   array (
-    'goods_id' => '27',
-    'goods_name' => '春季尼龙休闲裤',
+    'goods_id' => '7',
+    'goods_name' => '09春款专柜正品奢华系列9分裤',
   ),
-  12 => 
+  23 => 
   array (
-    'goods_id' => '12',
-    'goods_name' => '09新款飞腾运动鞋',
-  ),
-  13 => 
-  array (
-    'goods_id' => '13',
-    'goods_name' => '秀族09新款韩版淑女七分袖针织雪纺连衣裙',
+    'goods_id' => '23',
+    'goods_name' => '韩.春.搭.闲.优雅修身精致荡领针织连衣裙/配皮带',
   ),
 );
 

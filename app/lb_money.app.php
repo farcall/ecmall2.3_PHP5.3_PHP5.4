@@ -72,29 +72,35 @@ class Lb_moneyApp extends MemberbaseApp{
      * Created by QQ:710932
      */
     function tixian(){
-        //todo 提现
         if(IS_POST){
             $tx_money = isset($_POST['tx_money'])?($_POST['tx_money']):'';
             $pass_pay = isset($_POST['pass_pay'])?($_POST['pass_pay']):'';
             if(empty($tx_money) or empty($pass_pay)){
-                $this->show_warning("警告_金钱数量和支付密码不能为空");
+                $this->show_warning("cuowu_jinqianshulianghezhifumimabunengweikong");
                 return;
             }
 
             if(!is_numeric($tx_money) or ($tx_money <= 0)){
-                $this->show_warning("警告请输入合法金额");
+                $this->show_warning("cuowu_nishurudebushishuzilei");
                 return;
             }
 
             $user_id = $this->visitor->get('user_id');
             $lb_money_mod = &m('lb_money');
             $data = $lb_money_mod->get_info($user_id);
-            if($data['money_used'] < $tx_money){
-                $this->show_warning("警告_提现金额不得大于可用金额");
+
+
+            if($this->empty_bank($data)){
+                $this->show_warning('cuowu_nihaimeiyoushezhiyinhangxinxi');
                 return;
             }
+            if($data['money_used'] < $tx_money){
+                $this->show_warning("duibuqi_zhanghuyuebuzu");
+                return;
+            }
+
             if(md5($pass_pay) != $data['pass_pay']){
-                $this->show_warning("警告_支付密码错误");
+                $this->show_warning("cuowu_zhifumimayanzhengshibai");
                 return;
             }
 
@@ -103,9 +109,11 @@ class Lb_moneyApp extends MemberbaseApp{
             $data['money_freeze'] = $data['money_freeze'] + $tx_money;
             $lb_money_mod->edit('user_id=' . $user_id, $data);
 
+            $lb_tixian_mod = &m('lb_tixian');
             //提交等待管理员审核
             $lb_tixian_log = array(
                 'user_id'=>$user_id,
+                'tixian_sn'=>$lb_tixian_mod->build_tixian_sn(),
                 'user_name'=>$data['user_name'],
                 'bank_name'=>$data['bank_name'],
                 'bank_card'=>$data['bank_card'],
@@ -117,9 +125,9 @@ class Lb_moneyApp extends MemberbaseApp{
                 'status'=>0  //状态(体现中0;取消提现-1;提现成功1)
             );
 
-            $lb_tixian_mod = &m('lb_tixian');
+
             $lb_tixian_mod->add($lb_tixian_log);
-            $this->json_result('retval','msg');
+            $this->show_message(Lang::get('tixian_chenggong'));
             return;
         }
         else{
@@ -136,6 +144,81 @@ class Lb_moneyApp extends MemberbaseApp{
 
     }
 
+    /**
+     * 作用:提现日志列表
+     * Created by QQ:710932
+     */
+    function tixianlog(){
+        //todo 提现日志
+        $user_id = $this->visitor->get('user_id');
+        $lb_tixian_mod = &m('lb_tixian');
+
+        $data = $lb_tixian_mod->findAll(array(
+            'conditions' => "user_id=$user_id",
+            'order' => "add_time desc",
+        ));
+        $this->_curitem(Lang::get('tixianrizhi'));
+
+        $this->assign('log',$data);
+        $this->display("lb_money.tixianlog.html");
+    }
+
+    /**
+     * 作用:用户自己取消提现
+     * Created by QQ:710932
+     */
+    function tixianquxiao(){
+        $tixian_id = $_GET['id'];
+
+        $user_id = $this->visitor->get('user_id');
+        $lb_tixian_mod = &m('lb_tixian');
+
+        $data = $lb_tixian_mod->get($tixian_id);
+        /*检查是否在取消自己的申请*/
+        if($data['user_id'] != $user_id){
+            $this->show_warning(Lang::get('jinggao_qingbuyaochangshiquxiaobierendeshenqing'));
+            return;
+        }
+
+
+        $this->_curitem(Lang::get('tixianrizhi'));
+
+        $editdata['status'] = -1;
+        $editdata['check_time'] = time();
+
+        $lb_tixian_mod->edit('tixian_id='.$tixian_id,$editdata);
+
+        $this->show_message(Lang::get('tixianquxiaoshenqingchenggong'));
+        return;
+    }
+
+    /**
+     * 作用:提现重新申请
+     * Created by QQ:710932
+     */
+    function chongxinshenqing(){
+        $tixian_id = $_GET['id'];
+
+        $user_id = $this->visitor->get('user_id');
+        $lb_tixian_mod = &m('lb_tixian');
+
+        $data = $lb_tixian_mod->get($tixian_id);
+        /*检查是否在取消自己的申请*/
+        if($data['user_id'] != $user_id){
+            $this->show_warning(Lang::get('jinggao_qingbuyaochangshiquxiaobierendeshenqing'));
+            return;
+        }
+
+
+        $this->_curitem(Lang::get('tixianrizhi'));
+
+        $editdata['status'] = 0;
+        $editdata['check_time'] = time();
+
+        $lb_tixian_mod->edit('tixian_id='.$tixian_id,$editdata);
+        $this->show_message(Lang::get('tixianshenqingtijiaochenggong'));
+        return;
+    }
     /**
      * 作用:账户设置
      * Created by QQ:710932
@@ -183,4 +266,17 @@ class Lb_moneyApp extends MemberbaseApp{
         }
     }
 
+    /**
+     * @param $moneyAccount 一个会员的虚拟账户信息
+     * 作用:检查银行信息是否为空,如果为空则返回TRUE 否则返回FLASE
+     * Created by QQ:710932
+     */
+    private function empty_bank($moneyAccount)
+    {
+        if(empty($moneyAccount['bank_user']) or empty($moneyAccount['bank_card']) or empty($moneyAccount['bank_username'])){
+            return false;
+        }
+
+        return true;
+    }
 }

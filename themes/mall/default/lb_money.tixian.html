@@ -6,6 +6,8 @@
     <div id="right">
           <ul class="tab">
 				<li class="active">提现申请</li>
+              <li class="normal"><a href="index.php?app=lb_money&act=tixianlog">{$lang.tixianrizhi}</a></li>
+
           </ul>
 
         <div class="wrap margin1">
@@ -57,7 +59,7 @@
 				  <BR>
                   <span>{$lang.tixianjine}：</span>
                   <input name="tx_money" type="text" id="tx_money" size="8" onkeyup="value=value.replace(/[^\d]/g,'')">
-                  &nbsp;{$lang.yuan}&nbsp;<font color="#FF0000">{$lang.bunengxiaoyuyikuaiqianerqiebixushizhengshu}</font>}<BR>
+                  &nbsp;{$lang.yuan}&nbsp;<font color="#FF0000">{$lang.bunengxiaoyuyikuaiqianerqiebixushizhengshu}</font><BR>
                       <span>{$lang.zhifumima}：</span>
                       <input type="pass_pay" type="text" name="pass_pay" id="pass_pay" size="15"/>
                   <BR><BR><span><input type="submit" class="money_btn" value="{$lang.tixianshenqing}" /></span>
