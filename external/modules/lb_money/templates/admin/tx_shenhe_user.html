@@ -1,0 +1,141 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.index_tixianshenheguanli}</p>
+    <ul class="subnav">
+		<li><a class="btn3" href="index.php?module=my_money&act=tx_index_shenhe">{$lang.index_chakanquanbu}</a></li>
+		<li><a class="btn3" href="index.php?module=my_money&act=tx_wei_shenhe">{$lang.index_weishenhe}</a></li>
+		<li><a class="btn3" href="index.php?module=my_money&act=tx_yi_shenhe">{$lang.index_yishenhe}</a></li>
+		<li><a class="btn3" href="index.php?module=my_money&act=index">{$lang.index_fanhuidaohang}</a></li>
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post">
+            <table class="infoTable">
+<!--{if $result}-->
+            <tr>        
+              <th class="paddingT15">{$lang.tx_shenqingren}</th>
+              <td class="paddingT15 wordSpacing5">{$result.user_name}&nbsp;&nbsp;<a href="index.php?module=my_money&act=logs_user_shouru&user_name={$val.user_name}">{$lang.tx_chakan}{$val.user_name}{$lang.tx_zuijinshouru}</a></td>
+            </tr>
+
+            <tr>
+              <th class="paddingT15">申请金额</th>
+              <td class="paddingT15 wordSpacing5"><font color="#FF0000">{$result.money}元</font>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.tx_xq_yonghukeyongyue}</th>
+                <td class="paddingT15 wordSpacing5"><font color="#FF0000">{$result.money_used}</font></td>
+            </tr>
+            <tr>
+                <th class="paddingT15">账户总金额:</th>
+                <td class="paddingT15 wordSpacing5">{$result.zongjine}</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.tx_xq_yonghudongjiejine}</th>
+                <td class="paddingT15 wordSpacing5">{$result.money_freeze}
+            </tr>
+
+
+            <tr>
+                <th class="paddingT15">{$lang.tx_xq_tixianzhanghuleixing}</th>
+                <td class="paddingT15 wordSpacing5">{$result.bank_name}</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.tx_xq_tixianzhanghuregion}</th>
+                <td class="paddingT15 wordSpacing5">{$result.bank_address}</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.tx_xq_tixianzhanghao}</th>
+                <td class="paddingT15 wordSpacing5">{$result.bank_card}</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.tx_xq_tixianhuming}</th>
+                <td class="paddingT15 wordSpacing5">{$result.bank_username}</td>
+            </tr>
+                <tr>
+                    <th class="paddingT15">&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th class="paddingT15">{$lang.tx_shenqingshijian}</th>
+                    <td class="paddingT15 wordSpacing5">{$result.add_time|date:Y-m-d H:i:s}</td>
+                </tr>
+                <!--{if $result.check_time}-->
+                <tr>
+                    <th class="paddingT15">处理时间</th>
+                    <td class="paddingT15 wordSpacing5">{$result.check_time|date:Y-m-d H:i:s}</td>
+                </tr>
+                <!--{/if}-->
+
+			<tr>
+                <th class="paddingT15">{$lang.tx_xq_zhuanzhangchenggongjiaoyihao}</th>
+                <td class="paddingT15 wordSpacing5">
+				<input name="tixian_sn" type="text" id="tixian_sn" value="{$result.tixian_sn}" size="30" />
+                </td>
+            </tr>
+			<tr>
+                <th class="paddingT15">{$lang.tx_xq_gengxinrizhishuoming}</th>
+                <td class="paddingT15 wordSpacing5">
+				<input name="log_text" type="text" id="log_text" value="{$result.remark}" size="60" />
+                </td>
+            </tr>
+
+                <!--{if $result.status==1}-->
+                <tr>
+                    <th class="paddingT15">当前状态</th>
+                    <td class="paddingT15 wordSpacing5">
+                        <strong style="color: red;font-size: 40px">提现已完成</strong>
+                    </td>
+                </tr>
+                <!--{/if}-->
+
+                <!--{if $result.status==-1}-->
+                <tr>
+                    <th class="paddingT15">当前状态</th>
+                    <td class="paddingT15 wordSpacing5">
+                        <strong style="color: red;font-size: 40px">客户自己取消提现</strong>
+                    </td>
+                </tr>
+                <!--{/if}-->
+
+                <!--{if $result.status==-2}-->
+                <tr>
+                    <th class="paddingT15">当前状态</th>
+                    <td class="paddingT15 wordSpacing5">
+                        <strong style="color: red;font-size: 40px">审核未通过</strong>
+                    </td>
+                </tr>
+                <!--{/if}-->
+
+                <!--{if $result.status==0}-->
+                <tr>
+                    <th class="paddingT15">当前状态</th>
+                    <td class="paddingT15 wordSpacing5">
+                        <strong style="color: red;font-size: 40px">审核进行中</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="paddingT15">操作</th>
+                    <td class="paddingT15 wordspacing5">
+                        <input type="radio" name="istongguo" value="yes" checked/>通过
+                        <input type="radio" name="istongguo" value="no" />拒绝
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td class="ptb20">
+                        <input class="formbtn" type="submit" name="Submit" value="审核" />
+                        <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+                    </td>
+                </tr>
+                <!--{/if}-->
+
+
+
+<!--{/if}-->
+
+
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

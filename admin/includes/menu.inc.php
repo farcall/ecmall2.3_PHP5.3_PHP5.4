@@ -14,6 +14,10 @@ return array(
                 'text'=>'增加用户额度',
                 'url'=>'index.php?module=lb_money&act=user_money_add',
             ),
+            '提现申请审核'=>array(
+              'text'=>'提现申请审核',
+                'url'=>'index.php?module=lb_money&act=user_money_tixianshenqing',
+            ),
             '充值记录'=>array(
                 'text'=>'充值记录',
                 'url'=>'index.php?module=lb_money&act=user_rechargemoney_log',
