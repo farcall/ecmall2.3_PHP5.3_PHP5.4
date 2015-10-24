@@ -363,7 +363,16 @@ return array(
     'tags' => '标签(TAG)',
     'msg_instruction' => '短消息使用格式?',
     'not_csv_file' => '您选择的文件不是CSV格式',
-    'radar_title' => '商品雷达'
+    'radar_title' => '商品雷达',
+    /*600商城开始*/
+'zijinguanli'=>'资金管理',
+'myzhanghu'=>'我的账户',
+'jiaoyichaxun'=>'交易查询',
+'yuechaxun'=>'余额查询',
+'zaixianchongzhi'=>'在线充值',
+'zhuanzhang'=>'转账',
+'tixian'=>'提现'
+/*600商城结束*/
 );
 
 ?>
